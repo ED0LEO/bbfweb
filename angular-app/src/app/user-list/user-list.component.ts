@@ -1,47 +1,31 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { User } from '../user.model';
 @Component({
-  selector: 'app-user-update',
-  templateUrl: './user-update.component.html',
-  styleUrls: ['./user-update.component.css']
+  selector: 'app-user-list',
+  templateUrl: './user-list.component.html',
+  styleUrls: ['./user-list.component.css']
 })
-export class UserUpdateComponent implements OnInit {
-  id!: number;
-  user: User = new User();
-  constructor(private userService: UserService,
-    private route: ActivatedRoute, private router: Router) { }
-  private getUserById() {
-    this.id = this.route.snapshot.params['id'];
-    this.userService.getUserById(this.id).subscribe({
-      next: (data) => {
-        this.user = data;
-      },
-      error: (e) => {
-        console.log(e);
-      }
-    });
+export class UserListComponent implements OnInit {
+  users: User[] | undefined;
+  constructor(private userService: UserService, private router: Router) {
   }
   ngOnInit(): void {
-    this.getUserById();
+    this.getUsers();
   }
-  updateUser() {
-    this.userService.updateUser(this.id, this.user).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.redirectToUserList();
-      },
-      error: (e) => {
-        console.log(e);
-      }
+  private getUsers() {
+    this.userService.getUserList().subscribe(data => {
+      this.users = data;
     });
   }
-  redirectToUserList() {
-    this.router.navigate(['/users']);
+  updateUser(id: number) {
+    this.router.navigate(['update-user', id]);
   }
-  onSubmit() {
-    console.log(this.user);
-    this.updateUser();
+  deleteUser(id: number) {
+    this.userService.deleteUser(id).subscribe(data => {
+      console.log(data);
+      this.getUsers();
+    });
   }
 }

@@ -1,6 +1,6 @@
 <div class="container">
   <h2 class="text-center">Update User</h2>
-  <form (ngSubmit) = "onSubmit()">
+  <form (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="firstName"> First Name</label>
       <input type="text" class="form-control" id="firstName" [(ngModel)]="user.firstName" name="firstName">

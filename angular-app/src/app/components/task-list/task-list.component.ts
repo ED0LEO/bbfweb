@@ -9,6 +9,7 @@ import { TaskService } from '../../services/task.service';
 })
 export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
+  newTask: Task = new Task();
 
   constructor(private taskService: TaskService) { }
 
@@ -16,7 +17,15 @@ export class TaskListComponent implements OnInit {
     this.tasks = this.taskService.getTasks();
   }
 
+  addTask(): void {
+    if (this.newTask.title && this.newTask.description) {
+      this.taskService.addTask(this.newTask);
+      this.newTask = new Task(); // Clear the input fields
+    }
+  }
+
   deleteTask(task: Task): void {
     this.taskService.deleteTask(task);
   }
 }
+

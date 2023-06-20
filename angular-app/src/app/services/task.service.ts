@@ -1,26 +1,25 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Task } from '../models/Task';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private tasks: Task[] = [];
+  private baseUrl = 'http://localhost:8080/task';
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getTasks(): Task[] {
-    return this.tasks;
+  getAllTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(this.baseUrl);
   }
 
-  addTask(task: Task): void {
-    this.tasks.push(task);
+  createTask(task: Task): Observable<Task> {
+    return this.http.post<Task>(this.baseUrl, task);
   }
 
-  deleteTask(task: Task): void {
-    const index = this.tasks.indexOf(task);
-    if (index !== -1) {
-      this.tasks.splice(index, 1);
-    }
+  deleteTask(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

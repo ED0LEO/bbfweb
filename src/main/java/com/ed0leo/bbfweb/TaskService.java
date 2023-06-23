@@ -3,7 +3,9 @@ package com.ed0leo.bbfweb;
 import java.util.List;
 
 public interface TaskService {
-    public List<Task> getTasks();
-    public Task addTask(Task task);
-    public void deleteTask(int id);
+    List<Task> getTasks();
+    Task addTask(Task task);
+    void deleteTask(int id);
+    Task getTaskById(int id);
+    Task updateTask(Task task);
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -14,16 +15,27 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getTasks() {
-        return this.taskRepository.findAll();
+        return taskRepository.findAll();
+    }
+
+    @Override
+    public Task getTaskById(int id) {
+        Optional<Task> taskOptional = taskRepository.findById(id);
+        return taskOptional.orElse(null);
     }
 
     @Override
     public void deleteTask(int id) {
-        this.taskRepository.deleteById(id);
+        taskRepository.deleteById(id);
     }
 
     @Override
     public Task addTask(Task task) {
-        return this.taskRepository.save(task);
+        return taskRepository.save(task);
+    }
+
+    @Override
+    public Task updateTask(Task task) {
+        return taskRepository.save(task);
     }
 }

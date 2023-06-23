@@ -16,18 +16,32 @@ public class TaskController {
     @GetMapping
     @ResponseStatus(value = HttpStatus.OK)
     public List<Task> getAllTasks() {
-        return this.taskService.getTasks();
+        return taskService.getTasks();
     }
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public Task createTask(@RequestBody Task task) {
-        return this.taskService.addTask(task);
+        return taskService.addTask(task);
+    }
+
+    @PutMapping(value = "/{id}")
+    @ResponseStatus(value = HttpStatus.OK)
+    public Task updateTask(@PathVariable int id, @RequestBody Task task) {
+        Task existingTask = taskService.getTaskById(id);
+        if (existingTask != null) {
+            existingTask.setTitle(task.getTitle());
+            existingTask.setDescription(task.getDescription());
+            existingTask.setCompletion(task.isCompletion());
+            return taskService.updateTask(existingTask);
+        } else {
+            throw new TaskNotFoundException("Task not found with ID: " + id);
+        }
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void deleteTask(@PathVariable int id) {
-        this.taskService.deleteTask(id);
+        taskService.deleteTask(id);
     }
 }

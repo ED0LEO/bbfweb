@@ -33,4 +33,15 @@ export class TaskListComponent implements OnInit {
       this.tasks = this.tasks.filter(t => t.id !== task.id);
     });
   }
+
+  updateTask(task: Task): void {
+      this.taskService.updateTask(task).subscribe(updatedTask => {
+        // Find the index of the updated task in the tasks array
+        const index = this.tasks.findIndex(t => t.id === updatedTask.id);
+        if (index !== -1) {
+          // Replace the task at the found index with the updated task
+          this.tasks[index] = updatedTask;
+        }
+      });
+    }
 }

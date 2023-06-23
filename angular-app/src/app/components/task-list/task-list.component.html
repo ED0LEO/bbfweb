@@ -1,5 +1,25 @@
-<div *ngFor="let task of tasks" class="task-item">
-  <h4>{{ task.title }}</h4>
-  <p>{{ task.description }}</p>
-  <button (click)="deleteTask(task)">Delete</button>
+<div class="container">
+  <h2>Tasks</h2>
+
+  <!-- Task Form -->
+  <div class="mb-3">
+    <label for="title" class="form-label">Title</label>
+    <input type="text" class="form-control" id="title" [(ngModel)]="newTask.title">
+  </div>
+
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea class="form-control" id="description" [(ngModel)]="newTask.description"></textarea>
+  </div>
+
+  <button class="btn btn-primary" (click)="addTask()">Create Task</button>
+
+  <!-- Task List -->
+  <ul class="list-group mt-3">
+    <li class="list-group-item" *ngFor="let task of tasks">
+      <h5>{{ task.title }}</h5>
+      <p>{{ task.description }}</p>
+      <button class="btn btn-danger" (click)="deleteTask(task)">Delete</button>
+    </li>
+  </ul>
 </div>

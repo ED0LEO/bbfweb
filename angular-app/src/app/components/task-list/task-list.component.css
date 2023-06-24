@@ -1,0 +1,74 @@
+.task-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-title {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+.task-form .form-group {
+  margin-bottom: 15px;
+}
+
+.task-form .btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.task-form .btn-primary:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.task-list .form-check {
+  margin-bottom: 15px;
+}
+
+.task-list .list-group-item {
+  margin-bottom: 10px;
+}
+
+.task-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-details h5 {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.task-details .form-check-label {
+  font-size: 14px;
+  color: #666;
+}
+
+.task-details .form-check-input:checked + .form-check-label {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.task-list p {
+  color: #555;
+}
+
+.task-list .btn-danger {
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.task-list .btn-danger:hover {
+  background-color: #a71d2a;
+  border-color: #a71d2a;
+}

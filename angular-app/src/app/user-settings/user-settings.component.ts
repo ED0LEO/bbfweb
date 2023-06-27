@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from './user.model';
-import { UserAccountService } from './user-account.service';
+import { User } from '../user.model';
+import { UserAccountService } from '../user-account.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -8,8 +8,8 @@ import { UserAccountService } from './user-account.service';
   styleUrls: ['./user-settings.component.css']
 })
 export class UserSettingsComponent implements OnInit {
-  user: User;
-  newPassword: string;
+  user!: User;
+  newPassword!: string;
 
   constructor(private userAccountService: UserAccountService) { }
 

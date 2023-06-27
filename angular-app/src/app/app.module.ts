@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { UserAccountService } from './user-account.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserListComponent } from './user-list/user-list.component';
@@ -24,7 +24,7 @@ import { TaskListComponent } from './components/task-list/task-list.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [UserAccountService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

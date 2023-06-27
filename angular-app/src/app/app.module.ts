@@ -9,6 +9,9 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { TaskListComponent } from './components/task-list/task-list.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserSettingsComponent } from './user-settings/user-settings.component';
+import { UserLogoutComponent } from './user-logout/user-logout.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { TaskListComponent } from './components/task-list/task-list.component';
     UserListComponent,
     UserCreateComponent,
     UserUpdateComponent,
-    TaskListComponent
+    TaskListComponent,
+    UserProfileComponent,
+    UserSettingsComponent,
+    UserLogoutComponent
   ],
   imports: [
     BrowserModule,

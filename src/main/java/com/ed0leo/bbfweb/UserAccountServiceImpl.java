@@ -1,14 +1,11 @@
 package com.ed0leo.bbfweb;
 
-import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Map;
 
 public class UserAccountServiceImpl implements UserAccountService {
+    @Autowired
     private Map<String, UserAccount> users;
-
-    public UserAccountServiceImpl() {
-        users = new HashMap<>();
-    }
 
     @Override
     public void createUser(String username, String password, String email) {

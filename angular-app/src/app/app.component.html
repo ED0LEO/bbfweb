@@ -11,18 +11,14 @@
       <a class="nav-item nav-link" routerLinkActive="active" routerLink="tasks">Tasks</a>
     </div>
     <div class="user-account">
-      <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="userAccountDropdown" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-          User Account
-        </button>
-        <div class="dropdown-menu" aria-labelledby="userAccountDropdown">
-          <a class="dropdown-item" routerLink="profile">Profile</a>
-          <a class="dropdown-item" routerLink="settings">Settings</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" routerLink="logout">Logout</a>
-        </div>
-      </div>
+      <ng-container *ngIf="isLoggedIn; else loginButton">
+        <a class="btn btn-primary" routerLink="profile">Profile</a>
+        <a class="btn btn-primary" routerLink="settings">Settings</a>
+        <a class="btn btn-primary" routerLink="logout">Logout</a>
+      </ng-container>
+      <ng-template #loginButton>
+        <a class="btn btn-primary" routerLink="login">Login</a>
+      </ng-template>
     </div>
   </div>
 </nav>

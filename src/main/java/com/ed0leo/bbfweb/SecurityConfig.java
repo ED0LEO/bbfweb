@@ -18,7 +18,7 @@ public class SecurityConfig {
     InMemoryUserDetailsManager inMemoryUserDetailsManager() {
         String generatedPassword = "sdfsfs";
         return new InMemoryUserDetailsManager(User.withUsername("user")
-                .password(generatedPassword).roles("ROLE_USER").build());
+                .password(generatedPassword).roles("USER").build());
     }
 
     @Bean

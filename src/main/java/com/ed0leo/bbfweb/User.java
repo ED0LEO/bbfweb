@@ -73,5 +73,4 @@ public class User {
         return "UserVO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
                 + ", password=" + password + "]";
     }
-
 }

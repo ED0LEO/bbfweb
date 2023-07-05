@@ -18,14 +18,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+//@RestController
+//@RequestMapping(value = "user")
+//@CrossOrigin(origins = "http://localhost:4200")
+
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "user")
-@CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/user-login")
+    @PostMapping(value = "/user-login")
     public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map<String, String> loginRequest) {
         // Extract username and password from the login request map
         String username = loginRequest.get("username");

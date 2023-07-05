@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'profile', component: UserProfileComponent },
   { path: 'settings', component: UserSettingsComponent },
   { path: 'logout', component: UserLogoutComponent },
-  { path: 'login', component: UserLoginComponent},
+  { path: 'user-login', component: UserLoginComponent},
 ];
 
 @NgModule({

@@ -22,7 +22,7 @@ export class UserLoginComponent {
     console.log('Password:', this.password);
 
     const credentials = { username: this.username, password: this.password };
-        this.http.post('http://localhost:8080/user-login', credentials)
+        this.http.post('http://localhost:8080/user/user-login', credentials)
           .subscribe((response: any) => {
             // Handle successful login here
             console.log('Login successful!', response);

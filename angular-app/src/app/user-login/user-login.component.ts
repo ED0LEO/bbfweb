@@ -22,7 +22,7 @@ export class UserLoginComponent {
     console.log('Password:', this.password);
 
     const credentials = { username: this.username, password: this.password };
-        this.http.post('http://localhost:8080/login', credentials)
+        this.http.post('http://localhost:8080/user-login', credentials)
           .subscribe((response: any) => {
             // Handle successful login here
             console.log('Login successful!', response);
@@ -32,21 +32,4 @@ export class UserLoginComponent {
             console.error('Login failed!', error);
           });
       }
-
-//   onSubmit(loginForm: NgForm) {
-//     const username = loginForm.value.username;
-//     const password = loginForm.value.password;
-//
-//     // Send the POST request to the backend endpoint for authentication
-//     this.http.post<any>('http://localhost:8080/login', { username, password }).subscribe(
-//       response => {
-//         // Handle the successful authentication response here
-//         // Store the authentication token or cookie in local storage or cookie storage
-//       },
-//       error => {
-//         // Handle any error that occurred during authentication
-//       }
-//     );
-//   }
-
 }

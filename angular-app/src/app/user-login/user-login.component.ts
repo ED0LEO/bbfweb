@@ -15,21 +15,16 @@ export class UserLoginComponent {
     this.password = '';
   }
 
-  login(): void {
-    // Perform login logic here
-    console.log('Login button clicked');
-    console.log('Username:', this.username);
-    console.log('Password:', this.password);
-
-    const credentials = { username: this.username, password: this.password };
-        this.http.post('http://localhost:8080/user/user-login', credentials)
-          .subscribe((response: any) => {
-            // Handle successful login here
-            console.log('Login successful!', response);
-            // Save the authentication token or cookie in local storage or cookie storage
-          }, (error) => {
-            // Handle login error here
-            console.error('Login failed!', error);
-          });
-      }
+   login(): void {
+      const credentials = { username: this.username, password: this.password };
+      this.http.post('http://localhost:8080/user/user-login', credentials)
+        .subscribe((response: any) => {
+          // Handle successful login here
+          console.log('Login successful!', response);
+          // Save the authentication token or cookie in local storage or cookie storage
+        }, (error) => {
+          // Handle login error here
+          console.error('Login failed!', error);
+        });
+    }
 }

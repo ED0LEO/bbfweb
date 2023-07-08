@@ -18,33 +18,63 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+
 //@RestController
 //@RequestMapping(value = "user")
 //@CrossOrigin(origins = "http://localhost:4200")
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping(value = "user")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+//    @Autowired
+    private AuthenticationManager authenticationManager;
+
     @PostMapping(value = "/user-login")
     public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map<String, String> loginRequest) {
-        // Extract username and password from the login request map
         String username = loginRequest.get("username");
         String password = loginRequest.get("password");
 
-        // Perform authentication logic here (you can use Spring Security, custom logic, etc.)
-        // For simplicity, let's assume authentication is successful and create a dummy token.
-        String token = "example_token";
+        // Authenticate the user
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password)
+            );
 
-        // Prepare the login response
-        Map<String, String> loginResponse = new HashMap<>();
-        loginResponse.put("token", token);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        // Return the login response with the token
-        return ResponseEntity.ok(loginResponse);
+            // Generate token
+            String token = jwtTokenUtil.generateToken(userDetails);
+
+            // Prepare the login response
+            Map<String, String> loginResponse = new HashMap<>();
+            loginResponse.put("token", token);
+
+            return ResponseEntity.ok(loginResponse);
+
+//            String token = "example_token";
+//
+//            // Prepare the login response
+//            Map<String, String> loginResponse = new HashMap<>();
+//            loginResponse.put("token", token);
+//
+//            // Return the login response with the token
+//            return ResponseEntity.ok(loginResponse);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 
     @PostMapping

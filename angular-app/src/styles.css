@@ -1,2 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~bootstrap/dist/css/bootstrap.css";
+
+/* Reset body background color */
+body {
+  background: linear-gradient(135deg, #222222 49.5%, #333333 49.5%, #333333 50.5%) !important;
+  background-size: 20px 20px !important;
+  background-color: #333333 !important;
+  font-family: 'Press Start 2P', cursive !important;
+}
+
+/* Reset container background color */
+.container.container {
+  background-color: #000 !important;
+}
+
+/* Reset navbar background color */
+.navbar.navbar {
+  background-color: transparent !important;
+}
+
+/* Reset dropdown menu background color */
+.dropdown-menu.dropdown-menu {
+  background-color: #000 !important;
+}

@@ -7,27 +7,18 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent {
-  isLoggedIn: boolean = false;
-  username: string = '';
-
   constructor(private authService: AuthService) {}
 
-  ngOnInit() {
-    this.isLoggedIn = this.authService.getIsLoggedIn();
-    this.username = this.authService.getUsername();
+  get isLoggedIn(): boolean {
+    return this.authService.isLoggedIn;
   }
 
-  login() {
-    // Perform the login action
-    this.authService.login();
-    this.isLoggedIn = this.authService.getIsLoggedIn();
-    this.username = this.authService.getUsername();
+  get username(): string {
+    return this.authService.username;
   }
 
   logout() {
     // Perform the logout action
     this.authService.logout();
-    this.isLoggedIn = this.authService.getIsLoggedIn();
-    this.username = this.authService.getUsername();
   }
 }

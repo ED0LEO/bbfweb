@@ -4,27 +4,41 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthService {
-  private loggedIn: boolean = false; // Renamed property
+  private storageKey = 'authToken';
+  isLoggedIn: boolean = false;
+  username: string = '';
 
-  constructor() {}
+  constructor() {
+    this.initializeAuthState();
+  }
 
-  login(): void {
-    // Perform the login action
-    // Set the loggedIn flag accordingly
-    this.loggedIn = true;
+  private initializeAuthState(): void {
+    const token = localStorage.getItem(this.storageKey);
+    if (token) {
+      this.isLoggedIn = true;
+      // Set the username based on your implementation
+      this.username = this.getUsernameFromToken(token);
+    }
+  }
+
+  setLoggedIn(value: boolean): void {
+    this.isLoggedIn = value;
+  }
+
+  setUsername(username: string): void {
+    this.username = username;
+  }
+
+  private getUsernameFromToken(token: string): string {
+    // Extract the username from the authentication token
+    // Replace this logic with your actual implementation
+    return this.username;
   }
 
   logout(): void {
-    // Perform the logout action
-    // Clear the loggedIn flag
-    this.loggedIn = false;
-  }
-
-  getIsLoggedIn(): boolean {
-    return this.loggedIn; // Updated property name
-  }
-
-  getUsername(): string {
-    return 'John Doe'; // Replace with actual username or fetch from server
-  }
+      // Perform the logout action
+      this.setLoggedIn(false);
+      this.setUsername('');
+      localStorage.removeItem(this.storageKey); // Remove the authentication token
+    }
 }

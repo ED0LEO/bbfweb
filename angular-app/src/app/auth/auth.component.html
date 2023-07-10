@@ -1,6 +1,6 @@
 <div *ngIf="isLoggedIn; else loginButton">
   <p>Welcome, {{ username }}!</p>
-  <button routerLink="/logout">Logout</button>
+  <button (click)="logout()">Logout</button>
 </div>
 <ng-template #loginButton>
   <button routerLink="/user-login">Login</button>

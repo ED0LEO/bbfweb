@@ -14,14 +14,7 @@
       <a class="nav-item nav-link" routerLinkActive="active" routerLink="tasks">Tasks</a>
     </div>
     <div class="user-account">
-      <ng-container *ngIf="isLoggedIn; else loginButton">
-        <a class="btn btn-primary" routerLink="profile">Profile</a>
-        <a class="btn btn-primary" routerLink="settings">Settings</a>
-        <a class="btn btn-primary" routerLink="logout">Logout</a>
-      </ng-container>
-      <ng-template #loginButton>
-        <a class="btn btn-primary" routerLink="user-login">Login</a>
-      </ng-template>
+      <app-auth></app-auth>
     </div>
   </div>
 </nav>

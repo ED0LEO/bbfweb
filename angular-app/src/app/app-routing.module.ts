@@ -8,6 +8,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { UserLogoutComponent } from './user-logout/user-logout.component';
 import { UserLoginComponent } from './user-login/user-login.component';
+import { AuthComponent } from './auth/auth.component';
 
 const routes: Routes = [
   { path: 'users', component: UserListComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'settings', component: UserSettingsComponent },
   { path: 'logout', component: UserLogoutComponent },
   { path: 'user-login', component: UserLoginComponent},
+  { path: 'auth', component: AuthComponent },
 ];
 
 @NgModule({

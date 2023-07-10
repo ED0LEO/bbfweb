@@ -21,7 +21,8 @@ export class UserLoginComponent {
         .subscribe((response: any) => {
           // Handle successful login here
           console.log('Login successful!', response);
-          // Save the authentication token or cookie in local storage or cookie storage
+          // Save the authentication token in local storage
+          localStorage.setItem('token', response.token);
         }, (error) => {
           // Handle login error here
           console.error('Login failed!', error);

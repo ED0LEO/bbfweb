@@ -13,6 +13,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserSettingsComponent } from './user-settings/user-settings.component';
 import { UserLogoutComponent } from './user-logout/user-logout.component';
 import { UserLoginComponent } from './user-login/user-login.component';
+import { AuthComponent } from './auth/auth.component';
+import { AuthService } from './auth.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { UserLoginComponent } from './user-login/user-login.component';
     UserProfileComponent,
     UserSettingsComponent,
     UserLogoutComponent,
-    UserLoginComponent
+    UserLoginComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import { UserLoginComponent } from './user-login/user-login.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [UserAccountService],
+  providers: [UserAccountService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

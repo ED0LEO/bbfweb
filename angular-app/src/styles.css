@@ -23,3 +23,7 @@ body {
 .dropdown-menu.dropdown-menu {
   background-color: #000 !important;
 }
+
+input, textarea, .list-group-item, td, th {
+  background-color: #000 !important;
+}

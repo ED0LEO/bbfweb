@@ -30,9 +30,15 @@ export class AuthService {
   }
 
   private getUsernameFromToken(token: string): string {
-    // Extract the username from the authentication token
-    // Replace this logic with your actual implementation
-    return this.username;
+    // Decode the token payload
+    const tokenPayload = token.split('.')[1];
+    const decodedPayload = atob(tokenPayload);
+
+    // Parse the decoded payload as JSON
+    const payloadObject = JSON.parse(decodedPayload);
+
+    // Retrieve the username from the payload
+    return payloadObject.sub;
   }
 
   logout(): void {

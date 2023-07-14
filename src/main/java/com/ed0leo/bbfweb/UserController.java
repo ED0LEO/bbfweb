@@ -1,10 +1,16 @@
 package com.ed0leo.bbfweb;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Key;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +23,12 @@ import java.util.Map;
 @RequestMapping(value = "user")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
+//    @Value("${jwt.secret}")
+//    private String jwtSecret;
+
+    @Value("${jwt.expiration}")
+    private int jwtExpiration;
+
     @Autowired
     private UserService userService;
 
@@ -28,14 +40,16 @@ public class UserController {
         String username = loginRequest.get("username");
         String password = loginRequest.get("password");
 
-
         // Authenticate the user
         boolean authenticated = authenticationManager.authenticate(username, password);
 
         if (authenticated) {
+            // Generate JWT token
+            String token = generateToken(username);
+
             // Prepare the login response
             Map<String, String> loginResponse = new HashMap<>();
-            loginResponse.put("token", "example_token");
+            loginResponse.put("token", token);
 
             return ResponseEntity.ok(loginResponse);
         } else {
@@ -43,6 +57,24 @@ public class UserController {
         }
     }
 
+    private String generateToken(String username) {
+        // Generate a secure key for HS256 algorithm
+        Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+
+        // Set the token expiration date
+        Date expirationDate = new Date(System.currentTimeMillis() + jwtExpiration * 1000);
+
+        // Generate the JWT token
+        String token = Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(expirationDate)
+                .signWith(key)
+                .compact();
+
+
+        return token;
+    }
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED)
     public User registerUser(@RequestBody User userVO) {

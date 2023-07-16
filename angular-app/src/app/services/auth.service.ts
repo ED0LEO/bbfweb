@@ -7,6 +7,7 @@ export class AuthService {
   private storageKey = 'authToken';
   isLoggedIn: boolean = false;
   username: string = '';
+  userId: number | undefined;
 
   constructor() {
     this.initializeAuthState();
@@ -18,6 +19,7 @@ export class AuthService {
       this.isLoggedIn = true;
       // Set the username based on your implementation
       this.username = this.getUsernameFromToken(token);
+      this.userId = this.getUserIdFromToken(token);
     }
   }
 
@@ -39,6 +41,26 @@ export class AuthService {
 
     // Retrieve the username from the payload
     return payloadObject.sub;
+  }
+
+  private getUserIdFromToken(token: string): number | undefined {
+    try {
+      // Decode the token payload
+      const tokenPayload = token.split('.')[1];
+      const decodedPayload = atob(tokenPayload);
+
+      // Parse the decoded payload as JSON
+      const payloadObject = JSON.parse(decodedPayload);
+
+      // Retrieve the userId from the payload
+      const userId = payloadObject.userId;
+
+      // Check if userId exists and return it
+      return userId !== undefined ? +userId : undefined;
+    } catch (error) {
+      console.error('Failed to extract userId from token:', error);
+      return undefined;
+    }
   }
 
   logout(): void {

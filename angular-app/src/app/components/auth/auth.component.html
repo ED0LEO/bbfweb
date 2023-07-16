@@ -1,5 +1,13 @@
+<!--<div *ngIf="isLoggedIn; else loginButton">-->
+<!--  <p class="welcome-message">Welcome, <span class="username">{{ username }}</span>!</p>-->
+<!--  <button (click)="logout()">Logout</button>-->
+<!--</div>-->
+<!--<ng-template #loginButton>-->
+<!--  <button routerLink="/user-login">Login</button>-->
+<!--</ng-template>-->
 <div *ngIf="isLoggedIn; else loginButton">
   <p class="welcome-message">Welcome, <span class="username">{{ username }}</span>!</p>
+  <button class="btn btn-link" [routerLink]="'update-user/' + userId">Settings</button>
   <button (click)="logout()">Logout</button>
 </div>
 <ng-template #loginButton>

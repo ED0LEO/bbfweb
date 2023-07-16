@@ -35,6 +35,10 @@ public class UserController {
     @Autowired
     private CustomAuthenticationManager authenticationManager;
 
+    @Autowired
+    private UserRepository userRepository;
+
+
     @PostMapping(value = "/user-login")
     public ResponseEntity<Map<String, String>> loginUser(@RequestBody Map<String, String> loginRequest) {
         String username = loginRequest.get("username");
@@ -44,20 +48,28 @@ public class UserController {
         boolean authenticated = authenticationManager.authenticate(username, password);
 
         if (authenticated) {
-            // Generate JWT token
-            String token = generateToken(username);
+            // Get the user from the repository
+            User user = userRepository.findByUsername(username);
 
-            // Prepare the login response
-            Map<String, String> loginResponse = new HashMap<>();
-            loginResponse.put("token", token);
+            if (user != null) {
+                // Generate JWT token with userId
+                String token = generateToken(username, user.getId());
 
-            return ResponseEntity.ok(loginResponse);
+                // Prepare the login response
+                Map<String, String> loginResponse = new HashMap<>();
+                loginResponse.put("token", token);
+
+                return ResponseEntity.ok(loginResponse);
+            } else {
+                // User not found in the database
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
 
-    private String generateToken(String username) {
+    private String generateToken(String username, long userId) {
         // Generate a secure key for HS256 algorithm
         Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
@@ -67,11 +79,11 @@ public class UserController {
         // Generate the JWT token
         String token = Jwts.builder()
                 .setSubject(username)
+                .claim("userId", userId)
                 .setIssuedAt(new Date())
                 .setExpiration(expirationDate)
                 .signWith(key)
                 .compact();
-
 
         return token;
     }

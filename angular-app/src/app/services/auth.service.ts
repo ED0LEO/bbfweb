@@ -21,6 +21,14 @@ export class AuthService {
     this.userIdSubject.next(userId);
   }
 
+ getUserId(): number | undefined {
+    const token = localStorage.getItem(this.storageKey);
+    if (token)
+      return this.getUserIdFromToken(token);
+    else
+      return undefined;
+  }
+
   private initializeAuthState(): void {
     const token = localStorage.getItem(this.storageKey);
     if (token) {

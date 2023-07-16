@@ -12,6 +12,7 @@ import { UserLogoutComponent } from './components/user-logout/user-logout.compon
 import { UserLoginComponent } from './components/user-login/user-login.component';
 import { AuthComponent } from './components/auth/auth.component';
 import { AuthService } from './services/auth.service';
+import { ErrorComponent } from './components/error/error.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { AuthService } from './services/auth.service';
     TaskListComponent,
     UserLogoutComponent,
     UserLoginComponent,
-    AuthComponent
+    AuthComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,

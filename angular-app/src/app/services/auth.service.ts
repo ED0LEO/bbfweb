@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,20 @@ export class AuthService {
     this.initializeAuthState();
   }
 
+ private userIdSubject = new BehaviorSubject<number | undefined>(undefined);
+  userId$ = this.userIdSubject.asObservable();
+
+  setUserId(userId: number | undefined) {
+    this.userIdSubject.next(userId);
+  }
+
   private initializeAuthState(): void {
     const token = localStorage.getItem(this.storageKey);
     if (token) {
       this.isLoggedIn = true;
       // Set the username based on your implementation
       this.username = this.getUsernameFromToken(token);
-      this.userId = this.getUserIdFromToken(token);
+      this.setUserId(this.getUserIdFromToken(token));
     }
   }
 
@@ -29,6 +37,16 @@ export class AuthService {
 
   setUsername(username: string): void {
     this.username = username;
+  }
+
+  autoSetUpFromToken(): void {
+    const token = localStorage.getItem(this.storageKey);
+        if (token) {
+          this.isLoggedIn = true;
+          // Set the username based on your implementation
+          this.username = this.getUsernameFromToken(token);
+          this.setUserId(this.getUserIdFromToken(token));
+        }
   }
 
   private getUsernameFromToken(token: string): string {
@@ -64,9 +82,10 @@ export class AuthService {
   }
 
   logout(): void {
-      // Perform the logout action
-      this.setLoggedIn(false);
-      this.setUsername('');
-      localStorage.removeItem(this.storageKey); // Remove the authentication token
-    }
+    // Perform the logout action
+    this.setLoggedIn(false);
+    this.setUsername('');
+    this.setUserId(undefined); // Set userId to undefined
+    localStorage.removeItem(this.storageKey); // Remove the authentication token
+  }
 }

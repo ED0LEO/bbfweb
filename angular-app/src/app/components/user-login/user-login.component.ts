@@ -30,8 +30,7 @@ export class UserLoginComponent {
         // Save the authentication token in local storage
         localStorage.setItem('authToken', response.token);
         // Update the authentication state in the service
-        this.authService.setLoggedIn(true);
-        this.authService.setUsername(this.username);
+        this.authService.autoSetUpFromToken();
         // Redirect to the success page
         this.router.navigate(['/users']);
       }, (error) => {

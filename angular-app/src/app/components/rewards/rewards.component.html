@@ -1,9 +1,9 @@
 <h2>Rewards</h2>
 <p>Here are your rewards:</p>
 
-<div *ngFor="let video of videoList">
-  <p>{{ video.title }}</p>
-  <iframe width="560" height="315" [src]="video.url" frameborder="0" allowfullscreen></iframe>
+<div>
+  <p>{{ videoList[videoIndex].title }}</p>
+  <iframe width="560" height="315" [src]="videoList[videoIndex].url" frameborder="0" allowfullscreen></iframe>
 </div>
 
-<button (click)="fetchRecommendedVideos()">Roll</button>
+<button (click)="rollVideo()">Roll</button>

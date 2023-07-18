@@ -36,3 +36,73 @@ button:hover {
   background-color: #ff9933;
   color: #000;
 }
+
+
+/* rewards.component.css */
+
+.carousel-container {
+  position: relative;
+  height: 315px; /* Set the height to the size of your video or thumbnail */
+  overflow: hidden;
+}
+
+.carousel-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.carousel-wrapper.rolling {
+  animation: rollAnimation 5s linear infinite; /* Adjust the duration and easing as needed */
+}
+
+.carousel-item {
+  display: inline-block;
+  margin: 10px; /* Adjust the spacing between thumbnails */
+  opacity: 0.6; /* Adjust the opacity for non-selected thumbnails */
+  transition: opacity 0.2s;
+  position: relative; /* Added position for the title */
+}
+
+.carousel-item.selected {
+  opacity: 1; /* Full opacity for the selected thumbnail */
+}
+
+.video-title {
+  position: absolute; /* Added position to overlay the title */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.8); /* Adjust the background color as needed */
+  color: #fff; /* Adjust the text color as needed */
+  font-size: 12px; /* Adjust the font size as needed */
+  text-align: center;
+  transition: opacity 0.2s;
+}
+
+.video-title.hide {
+  display: none;
+}
+
+.hide {
+  display: none;
+}
+
+@keyframes rollAnimation {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-300%); /* Move up by the height of three thumbnails */
+  }
+}
+
+.player-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 315px; /* Set the height to the size of your video player */
+}

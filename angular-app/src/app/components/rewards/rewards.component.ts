@@ -1,4 +1,3 @@
-//AIzaSyAXUcA4LkovflRfGhbdp40YlQ2OWITE1zg
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -24,7 +23,7 @@ export class RewardsComponent implements OnInit {
 
   fetchRecommendedVideos(): void {
     // Replace 'YOUR_YOUTUBE_API_KEY' with your actual YouTube API key
-    const apiKey = 'AIzaSyAXUcA4LkovflRfGhbdp40YlQ2OWITE1zg';
+    const apiKey = 'YOUR_YOUTUBE_API_KEY';
     const videoId = 'Xw0WKPwQumw'; // Replace with your desired video's ID
     const maxResults = 20; // Number of recommended videos to fetch
     const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&relatedToVideoId=${videoId}&maxResults=${maxResults}&type=video&key=${apiKey}`;

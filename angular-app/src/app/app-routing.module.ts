@@ -9,6 +9,7 @@ import { UserLoginComponent } from './components/user-login/user-login.component
 import { AuthComponent } from './components/auth/auth.component';
 import { AuthGuard } from './auth.guard';
 import { ErrorComponent } from './components/error/error.component';
+import { RewardsComponent } from './components/rewards/rewards.component';
 
 const routes: Routes = [
   { path: 'users', component: UserListComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'user-login', component: UserLoginComponent},
   { path: 'auth', component: AuthComponent },
   { path: 'update-user/:id', component: UserUpdateComponent, canActivate: [AuthGuard] },
-  { path: 'error', component: ErrorComponent},
+  { path: 'error', component: ErrorComponent },
+  { path: 'rewards', component: RewardsComponent },
 ];
 
 @NgModule({

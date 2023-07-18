@@ -13,6 +13,7 @@ import { UserLoginComponent } from './components/user-login/user-login.component
 import { AuthComponent } from './components/auth/auth.component';
 import { AuthService } from './services/auth.service';
 import { ErrorComponent } from './components/error/error.component';
+import { RewardsComponent } from './components/rewards/rewards.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ErrorComponent } from './components/error/error.component';
     UserLogoutComponent,
     UserLoginComponent,
     AuthComponent,
-    ErrorComponent
+    ErrorComponent,
+    RewardsComponent
   ],
   imports: [
     BrowserModule,

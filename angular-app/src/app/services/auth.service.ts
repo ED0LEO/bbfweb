@@ -14,14 +14,14 @@ export class AuthService {
     this.initializeAuthState();
   }
 
- private userIdSubject = new BehaviorSubject<number | undefined>(undefined);
+  private userIdSubject = new BehaviorSubject<number | undefined>(undefined);
   userId$ = this.userIdSubject.asObservable();
 
   setUserId(userId: number | undefined) {
     this.userIdSubject.next(userId);
   }
 
- getUserId(): number | undefined {
+  getUserId(): number | undefined {
     const token = localStorage.getItem(this.storageKey);
     if (token)
       return this.getUserIdFromToken(token);

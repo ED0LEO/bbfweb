@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users_table")
 public class User {
@@ -28,12 +30,23 @@ public class User {
     @Column
     private String password;
 
+    @Column
+    private List<String> sourceVideos;
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<String> getSourceVideos() {
+        return sourceVideos;
+    }
+
+    public void setSourceVideos(List<String> sourceVideos) {
+        this.sourceVideos = sourceVideos;
     }
 
     public String getFirstName() {

@@ -11,23 +11,36 @@ import { User } from '../../models/user.model';
 export class UserUpdateComponent implements OnInit {
   id!: number;
   user: User = new User();
-  constructor(private userService: UserService,
-    private route: ActivatedRoute, private router: Router) { }
+  sourceVideos: string = ''; // Add a new field for source videos
+
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
+
   private getUserById() {
     this.id = this.route.snapshot.params['id'];
     this.userService.getUserById(this.id).subscribe({
       next: (data) => {
         this.user = data;
+        // Set the sourceVideos field when retrieving user data
+        this.sourceVideos = this.user.sourceVideos.join(',');
       },
       error: (e) => {
         console.log(e);
       }
     });
   }
+
   ngOnInit(): void {
     this.getUserById();
   }
+
   updateUser() {
+    // Set the sourceVideos field of the user before updating
+    this.user.sourceVideos = this.sourceVideos.split(',');
+
     this.userService.updateUser(this.id, this.user).subscribe({
       next: (data) => {
         console.log(data);
@@ -38,9 +51,11 @@ export class UserUpdateComponent implements OnInit {
       }
     });
   }
+
   redirectToUserList() {
     this.router.navigate(['/users']);
   }
+
   onSubmit() {
     console.log(this.user);
     this.updateUser();

@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent },
   { path: 'update-user/:id', component: UserUpdateComponent, canActivate: [AuthGuard] },
   { path: 'error', component: ErrorComponent },
-  { path: 'rewards', component: RewardsComponent },
+  { path: 'rewards', component: RewardsComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

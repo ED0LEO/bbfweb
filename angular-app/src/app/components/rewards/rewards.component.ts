@@ -2,29 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.model';
+
 interface Video {
   title: string;
   url: SafeResourceUrl;
   thumbnailUrl: SafeResourceUrl;
 }
-
-const presetVideoIds = [
-  'w5NEIok80pw',
-  'MFlrVLNZjJY',
-  '0SuDVcTv25g',
-  'RSF65yVFRTw',
-  '3iz5LZGrp',
-  'GDYiqIaVCQk',
-  'iLs8t1N8Xkw',
-  'ecZrWiUXLg0',
-  'HeQX2HjkcNo',
-  'HjXqzH8wCyg',
-  'KvrHYS0RaLA',
-  'AjkiBRNVeV8',
-  'qWycdTGq0VA',
-  'EyBDtUtyshk',
-  'XFDM1ip5HdU',
-];
 
 @Component({
   selector: 'app-rewards',
@@ -38,13 +24,60 @@ export class RewardsComponent implements OnInit {
   stopIndex: number | null = null;
   showThumbnails: boolean = true;
   fetchLimit: number = 0;
+  presetVideoIds: string[] = [];
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
+  user: User = new User();
+
+  constructor(
+    private http: HttpClient,
+    private sanitizer: DomSanitizer,
+    private authService: AuthService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.initializeVideoList();
     this.updateFetchLimit();
+    this.loadUserData();
   }
+
+  loadUserData(): void {
+    // Get the current user from the AuthService
+    const userId = this.authService.getUserId();
+
+    // Check if a user is logged in
+    if (userId) {
+      // Fetch the user data using the UserService or any other appropriate method
+      // Replace 'getUserById' with the appropriate method from the UserService to fetch user data by ID
+      this.userService.getUserById(userId).subscribe(
+        (user) => {
+          this.user = user;
+          // After fetching the user data, update the video list to use the user's source videos
+          this.updateVideoListFromUser();
+        },
+        (error) => {
+          console.error('Failed to fetch user data:', error);
+        }
+      );
+    } else {
+      console.log('No user is currently logged in.'); // Handle the case where no user is logged in
+    }
+  }
+
+  updateVideoListFromUser(): void {
+    // Clear the existing presetVideoIds
+    this.presetVideoIds = [];
+
+    // Check if the user has sourceVideos
+    if (this.user.sourceVideos) {
+      // Iterate through the user's source videos and add the video URLs to the presetVideoIds array
+      this.user.sourceVideos.forEach((videoUrl) => {
+        // Add the video URL to the presetVideoIds array
+        this.presetVideoIds.push(videoUrl);
+      });
+    }
+  }
+
 
   decrementFetchLimit(): void {
     if (this.fetchLimit > 0) {
@@ -107,7 +140,7 @@ export class RewardsComponent implements OnInit {
     const amountOfResults = 30;
 
     // Select a random video ID from the preset list
-    const randomVideoId = presetVideoIds[Math.floor(Math.random() * presetVideoIds.length)];
+    const randomVideoId = this.presetVideoIds[Math.floor(Math.random() * this.presetVideoIds.length)];
 
     const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&relatedToVideoId=${randomVideoId}&maxResults=${amountOfResults}&key=${apiKey}`;
 

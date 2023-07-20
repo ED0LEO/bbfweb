@@ -17,6 +17,10 @@
       <label for="password">Password</label>
       <input type="password" class="form-control" id="password" [(ngModel)]="user.password" name="password">
     </div>
+    <div class="form-group">
+      <label for="sourceVideos">Source Videos (Comma-Separated)</label>
+      <input type="text" class="form-control" id="sourceVideos" [(ngModel)]="sourceVideos" name="sourceVideos">
+    </div>
     <button class="btn btn-success mt-2" type="submit">Submit</button>
   </form>
 </div>

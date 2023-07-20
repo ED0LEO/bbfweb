@@ -15,6 +15,12 @@ import { AuthService } from './services/auth.service';
 import { ErrorComponent } from './components/error/error.component';
 import { RewardsComponent } from './components/rewards/rewards.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { CalendarComponent } from './components/calendar/calendar.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -28,13 +34,19 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     AuthComponent,
     ErrorComponent,
     RewardsComponent,
-    DashboardComponent
+    DashboardComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

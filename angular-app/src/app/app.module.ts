@@ -14,6 +14,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { AuthService } from './services/auth.service';
 import { ErrorComponent } from './components/error/error.component';
 import { RewardsComponent } from './components/rewards/rewards.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { RewardsComponent } from './components/rewards/rewards.component';
     UserLoginComponent,
     AuthComponent,
     ErrorComponent,
-    RewardsComponent
+    RewardsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

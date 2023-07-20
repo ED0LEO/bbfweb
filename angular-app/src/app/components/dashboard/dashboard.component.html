@@ -1,0 +1,15 @@
+<div class="container">
+  <h2 class="text-center">Dashboard</h2>
+
+  <ng-container *ngIf="user">
+    <h3 class="text-center">Welcome, {{ user.username }}!</h3>
+
+    <!-- Calendar -->
+    <!-- Add calendar component here -->
+
+    <!-- Points left -->
+    <p class="text-center">Points: {{ user.points }}</p>
+  </ng-container>
+
+  <p *ngIf="!user" class="text-center">Fetching user data...</p>
+</div>

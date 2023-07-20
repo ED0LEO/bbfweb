@@ -33,6 +33,17 @@ public class User {
     @Column
     private List<String> sourceVideos;
 
+    @Column
+    private int points;
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     public int getId() {
         return id;
     }
@@ -84,6 +95,6 @@ public class User {
     @Override
     public String toString() {
         return "UserVO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", username=" + username
-                + ", password=" + password + "]";
+                + ", password=" + password + ", points=" + points + "]";
     }
 }

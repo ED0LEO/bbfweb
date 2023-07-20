@@ -36,3 +36,13 @@ out/
 ### VS Code ###
 .vscode/
 /node_modules/
+
+C:/*
+/package.json
+/package-lock.json
+/src/main/java/com/ed0leo/bbfweb/WebSecurityConfig.java
+/src/main/resources/application.properties
+
+/C:/temp/tests.mv.db
+/C:/temp/tests.trace.db
+/angular-app/src/app/components/rewards/rewards.component.ts

@@ -30,4 +30,9 @@
   </div>
 </div>
 
-<button (click)="rollVideo()" [disabled]="isRolling">Roll</button>
+<div class="button-container">
+  <button (click)="rollVideo()" [disabled]="isRolling">Roll</button>
+  <button (click)="fetchRecommendedVideos()" [disabled]="fetchLimit === 0">Fetch</button>
+</div>
+
+<p>Fetch Limit: {{ fetchLimit }}</p>

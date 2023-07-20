@@ -1,5 +1,3 @@
-// rewards.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -9,6 +7,24 @@ interface Video {
   url: SafeResourceUrl;
   thumbnailUrl: SafeResourceUrl; // Add thumbnail URL property
 }
+
+const presetVideoIds = [
+  'w5NEIok80pw',
+  'MFlrVLNZjJY',
+  '0SuDVcTv25g',
+  'RSF65yVFRTw',
+  '3iz5LZGrp',
+  'GDYiqIaVCQk',
+  'iLs8t1N8Xkw',
+  'ecZrWiUXLg0',
+  'HeQX2HjkcNo',
+  'HjXqzH8wCyg',
+  'KvrHYS0RaLA',
+  'AjkiBRNVeV8',
+  'qWycdTGq0VA',
+  'EyBDtUtyshk',
+  'XFDM1ip5HdU',
+];
 
 @Component({
   selector: 'app-rewards',
@@ -20,6 +36,7 @@ export class RewardsComponent implements OnInit {
   videoIndex: number = 0;
   isRolling: boolean = false;
   stopIndex: number | null = null;
+  showThumbnails: boolean = true;
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
 
@@ -30,7 +47,13 @@ export class RewardsComponent implements OnInit {
   fetchRecommendedVideos(): void {
     // Replace 'YOUR_YOUTUBE_API_KEY' with your actual YouTube API key
     const apiKey = 'YOUR_YOUTUBE_API_KEY';
-    const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&relatedToVideoId=Xw0WKPwQumw&maxResults=9&key=${apiKey}`;
+    const amountOfResults = 3;
+
+    // Select a random video ID from the preset list
+    const randomVideoId = presetVideoIds[Math.floor(Math.random() * presetVideoIds.length)];
+
+
+    const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&relatedToVideoId=${randomVideoId}&maxResults=${amountOfResults}&key=${apiKey}`;
 
     this.http.get<any>(apiUrl).subscribe(
       (response) => {
@@ -67,6 +90,9 @@ export class RewardsComponent implements OnInit {
 
     // Start the rolling animation
     this.animateRoll(0, lastIndex, 0);
+
+    // Show the thumbnails during rolling
+    this.showThumbnails = true;
   }
 
   animateRoll(currentIndex: number, lastIndex: number, count: number): void {
@@ -86,6 +112,8 @@ export class RewardsComponent implements OnInit {
       this.isRolling = true;
       setTimeout(() => {
         this.isRolling = false;
+        // Hide the thumbnails after the rolling stops
+        this.showThumbnails = false;
       }, 2000); // Adjust the duration of the stop animation
     }
   }

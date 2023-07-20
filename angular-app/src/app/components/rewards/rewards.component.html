@@ -1,14 +1,21 @@
-<!-- rewards.component.html -->
-
 <h2>Rewards</h2>
 <p>Here are your rewards:</p>
 
 <div class="carousel-container">
   <div class="carousel-wrapper" [class.rolling]="isRolling" (click)="playSelectedVideo()">
-    <div *ngFor="let video of videoList; let i = index">
-      <div class="carousel-item" [class.selected]="stopIndex === i">
-        <img [src]="video.thumbnailUrl" alt="{{ video.title }}" [class.hide]="stopIndex !== null && stopIndex !== i">
-        <p class="video-title" [class.hide]="stopIndex !== null && stopIndex !== i">{{ video.title }}</p>
+    <div class="carousel-inner-wrapper">
+      <div *ngFor="let video of videoList; let i = index">
+        <div class="carousel-item" [class.selected]="stopIndex === i">
+          <img
+            *ngIf="showThumbnails && (stopIndex === null || stopIndex === i)"
+            [src]="video.thumbnailUrl"
+            alt="{{ video.title }}"
+          >
+          <p
+            *ngIf="showThumbnails && (stopIndex === null || stopIndex === i)"
+            class="video-title"
+          >{{ video.title }}</p>
+        </div>
       </div>
     </div>
   </div>

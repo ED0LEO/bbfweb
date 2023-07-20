@@ -37,9 +37,6 @@ button:hover {
   color: #000;
 }
 
-
-/* rewards.component.css */
-
 .carousel-container {
   position: relative;
   height: 315px; /* Set the height to the size of your video or thumbnail */
@@ -49,7 +46,7 @@ button:hover {
 .carousel-wrapper {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 25%;
 }
 
 .carousel-wrapper.rolling {
@@ -59,7 +56,7 @@ button:hover {
 .carousel-item {
   display: inline-block;
   margin: 10px; /* Adjust the spacing between thumbnails */
-  opacity: 0.6; /* Adjust the opacity for non-selected thumbnails */
+  opacity: 0.8; /* Adjust the opacity for non-selected thumbnails */
   transition: opacity 0.2s;
   position: relative; /* Added position for the title */
 }

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Task } from '../../models/Task';
 import { TaskService } from '../../services/task.service';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-task-list',
@@ -11,11 +14,31 @@ export class TaskListComponent implements OnInit {
   tasks: Task[] = [];
   newTask: Task = new Task();
   hideCompleted: boolean = false;
+  user: User | undefined;
 
-  constructor(private taskService: TaskService) { }
+  constructor(private authService: AuthService, private userService: UserService, private taskService: TaskService) {}
 
   ngOnInit(): void {
     this.getTasks();
+    this.fetchUserData();
+  }
+
+  fetchUserData(): void {
+    if (this.authService.isLoggedIn) {
+      const userId = this.authService.getUserId();
+
+      if (userId !== undefined) {
+        // Fetch the user data using the UserService
+        this.userService.getUserById(userId).subscribe(
+          (user) => {
+            this.user = user;
+          },
+          (error) => {
+            console.error('Failed to fetch user data:', error);
+          }
+        );
+      }
+    }
   }
 
   getTasks(): void {
@@ -41,6 +64,26 @@ export class TaskListComponent implements OnInit {
 
   updateTask(task: Task): void {
     this.taskService.updateTask(task).subscribe();
+
+    if (this.user)
+    {
+      if (task.completion) {
+        this.user.points += 20;
+      }
+      else
+      {
+        this.user.points -= 20;
+      }
+      // Update the user data using the UserService
+      this.userService.updateUser(this.user.id, this.user).subscribe(
+        () => {
+          console.log('User points updated successfully.');
+        },
+        (error) => {
+          console.error('Failed to update user points:', error);
+        }
+      );
+    }
   }
 
   get filteredTasks(): Task[] {
@@ -50,4 +93,7 @@ export class TaskListComponent implements OnInit {
       return this.tasks;
     }
   }
+
+
+
 }

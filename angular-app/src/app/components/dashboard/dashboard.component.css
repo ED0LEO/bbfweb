@@ -1,0 +1,7 @@
+.container {
+  color: white !important;
+}
+
+input, textarea, .list-group-item, td, th {
+  color: white !important;
+}

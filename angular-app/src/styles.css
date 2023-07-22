@@ -27,3 +27,22 @@ body {
 input, textarea, .list-group-item, td, th {
   background-color: #000 !important;
 }
+
+/* Target the input element inside mat-form-field */
+.mat-form-field-appearance-fill .mat-form-field-infix input {
+  color: white !important;
+}
+
+/* Target the mat-datepicker-toggle icon inside mat-form-field */
+.mat-form-field-appearance-fill .mat-form-field-infix mat-datepicker-toggle .mat-icon-button, table {
+  color: white !important;
+}
+
+/* Optional: To style the mat-datepicker input */
+.mat-datepicker-content .mat-calendar-body-cell-content {
+  color: white !important;
+}
+
+.app-calendar, .app-calendar .app-calendar-datepicker, .mat-datepicker-content-container {
+  font-family: "Roboto", sans-serif !important;
+}

@@ -9,6 +9,8 @@ import { User } from '../../models/user.model';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 interface Video {
   title: string;
   url: SafeResourceUrl;
@@ -35,7 +37,8 @@ export class RewardsComponent implements OnInit {
     private http: HttpClient,
     private sanitizer: DomSanitizer,
     private authService: AuthService,
-    private userService: UserService
+    private userService: UserService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -179,8 +182,10 @@ export class RewardsComponent implements OnInit {
             console.error('Failed to fetch videos:', error);
           }
         );
+        this.showNotification("-15");
       } else {
         console.log("Not enough points");
+        this.showNotification("Not enough points");
       }
     });
   }
@@ -209,8 +214,11 @@ export class RewardsComponent implements OnInit {
 
         // Show the thumbnails during rolling
         this.showThumbnails = true;
+
+        this.showNotification('-1');
       } else {
           console.log("Not enough points");
+          this.showNotification('Not enough points');
       }
     });
   }
@@ -257,5 +265,14 @@ export class RewardsComponent implements OnInit {
       console.log('Insufficient points.');
       return of(false); // Points deduction failed
     }
+  }
+
+  showNotification(message: string, action: string = 'Close') {
+    this.snackBar.open(message, undefined, {
+      duration: 3000, // Duration in milliseconds (3 seconds in this example)
+      verticalPosition: 'top',
+      horizontalPosition: 'right',
+      panelClass: ['custom-snackbar'],
+    });
   }
 }

@@ -56,3 +56,13 @@ input, textarea, .list-group-item, td, th {
 .mat-calendar-content .mat-calendar-body-cell-content {
   font-size: 18px;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.custom-snackbar {
+  min-width: 10px;
+  max-width: 300px;
+  font-size: 16px;
+  padding-right: 40px;
+}

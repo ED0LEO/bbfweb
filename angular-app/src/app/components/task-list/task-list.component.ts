@@ -93,7 +93,4 @@ export class TaskListComponent implements OnInit {
       return this.tasks;
     }
   }
-
-
-
 }

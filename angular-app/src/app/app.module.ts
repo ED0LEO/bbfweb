@@ -22,7 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
-
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -51,7 +51,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     MatNativeDateModule,
     MatMomentDateModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

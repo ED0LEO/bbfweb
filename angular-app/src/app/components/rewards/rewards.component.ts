@@ -6,6 +6,9 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+
 interface Video {
   title: string;
   url: SafeResourceUrl;
@@ -78,7 +81,6 @@ export class RewardsComponent implements OnInit {
     }
   }
 
-
   decrementFetchLimit(): void {
     if (this.fetchLimit > 0) {
       this.fetchLimit--;
@@ -89,8 +91,8 @@ export class RewardsComponent implements OnInit {
   updateFetchLimit(): void {
     const lastUpdateTimestamp = localStorage.getItem('fetchLimitUpdate');
     if (!lastUpdateTimestamp) {
-      // Set the initial fetch limit to 85 if not updated before
-      this.fetchLimit = 85;
+      // Set the initial fetch limit to 100 if not updated before
+      this.fetchLimit = 100;
       localStorage.setItem('fetchLimit', this.fetchLimit.toString());
     } else {
       // Calculate the time difference in milliseconds
@@ -100,7 +102,7 @@ export class RewardsComponent implements OnInit {
       // Check if a day has passed (86400000 ms = 1 day)
       if (timeDiff >= 86400000) {
         // Update fetch limit and store the new timestamp
-        this.fetchLimit = 85;
+        this.fetchLimit = 100;
         localStorage.setItem('fetchLimit', this.fetchLimit.toString());
         localStorage.setItem('fetchLimitUpdate', currentTime.toString());
       } else {
@@ -109,8 +111,8 @@ export class RewardsComponent implements OnInit {
         if (storedFetchLimit) {
           this.fetchLimit = Number(storedFetchLimit);
         } else {
-          // Set the initial fetch limit to 85 if not found in localStorage
-          this.fetchLimit = 85;
+          // Set the initial fetch limit to 100 if not found in localStorage
+          this.fetchLimit = 100;
           localStorage.setItem('fetchLimit', this.fetchLimit.toString());
         }
       }
@@ -135,65 +137,82 @@ export class RewardsComponent implements OnInit {
   }
 
   fetchRecommendedVideos(): void {
-    // Replace 'YOUR_YOUTUBE_API_KEY' with your actual YouTube API key
-    const apiKey = 'YOUR_YOUTUBE_API_KEY';
-    const amountOfResults = 30;
+    // Try to deduct 15 points for fetching new videos
+    this.deductPoints(15).subscribe((success: boolean) => {
+      if (success) {
+        // Replace 'YOUR_YOUTUBE_API_KEY' with your actual YouTube API key
+        const apiKey = 'YOUR_YOUTUBE_API_KEY';
+        const amountOfResults = 30;
 
-    // Select a random video ID from the preset list
-    const randomVideoId = this.presetVideoIds[Math.floor(Math.random() * this.presetVideoIds.length)];
+        // Select a random video ID from the preset list
+        const randomVideoId = this.presetVideoIds[Math.floor(Math.random() * this.presetVideoIds.length)];
 
-    const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&relatedToVideoId=${randomVideoId}&maxResults=${amountOfResults}&key=${apiKey}`;
+        const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&relatedToVideoId=${randomVideoId}&maxResults=${amountOfResults}&key=${apiKey}`;
 
-    this.http.get<any>(apiUrl).subscribe(
-      (response) => {
-        const items = response.items;
-        this.videoList = items.map((item: any) => {
-          const videoId = item.id.videoId;
-          const videoUrl = `https://www.youtube.com/embed/${videoId}`;
-          const thumbnailUrl = item.snippet.thumbnails.medium.url;
-          return {
-            title: item.snippet.title,
-            url: this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl),
-            thumbnailUrl: this.sanitizer.bypassSecurityTrustResourceUrl(thumbnailUrl),
-          };
-        });
+        this.http.get<any>(apiUrl).subscribe(
+          (response) => {
+            const items = response.items;
+            this.videoList = items.map((item: any) => {
+              const videoId = item.id.videoId;
+              const videoUrl = `https://www.youtube.com/embed/${videoId}`;
+              const thumbnailUrl = item.snippet.thumbnails.medium.url;
+              return {
+                title: item.snippet.title,
+                url: this.sanitizer.bypassSecurityTrustResourceUrl(videoUrl),
+                thumbnailUrl: this.sanitizer.bypassSecurityTrustResourceUrl(thumbnailUrl),
+              };
+            });
 
-         // Store the videoList in localStorage for future use
-        const storedVideoList = JSON.stringify(this.videoList, (key, value) => {
-          if (key === 'url' || key === 'thumbnailUrl') {
-            // Convert SafeResourceUrl objects to regular strings before storing
-            return value.changingThisBreaksApplicationSecurity;
+             // Store the videoList in localStorage for future use
+            const storedVideoList = JSON.stringify(this.videoList, (key, value) => {
+              if (key === 'url' || key === 'thumbnailUrl') {
+                // Convert SafeResourceUrl objects to regular strings before storing
+                return value.changingThisBreaksApplicationSecurity;
+              }
+              return value;
+            });
+            localStorage.setItem('videoList', storedVideoList);
+
+            this.decrementFetchLimit();
+          },
+          (error) => {
+            console.error('Failed to fetch videos:', error);
           }
-          return value;
-        });
-        localStorage.setItem('videoList', storedVideoList);
-
-        this.decrementFetchLimit();
-      },
-      (error) => {
-        console.error('Failed to fetch videos:', error);
+        );
+      } else {
+        console.log("Not enough points");
       }
-    );
+    });
   }
 
   rollVideo(): void {
-    this.isRolling = true;
-    this.stopIndex = null;
+    // Try to deduct 1 point
+    this.deductPoints(1).subscribe((success: boolean) => {
+      if (success) {
+        this.isRolling = true;
+        this.stopIndex = null;
 
-    // Generate a random index to pick a video from the list
-    const randomIndex = Math.floor(Math.random() * this.videoList.length);
+        // Deduct 1 point
+        this.deductPoints(1);
 
-    // Generate a random number of rolls between 5 and 10
-    const totalRolls = Math.floor(Math.random() * 6) + 5;
+        // Generate a random index to pick a video from the list
+        const randomIndex = Math.floor(Math.random() * this.videoList.length);
 
-    // Calculate the index to stop the rolling animation
-    const lastIndex = (randomIndex + totalRolls) % this.videoList.length;
+        // Generate a random number of rolls between 5 and 10
+        const totalRolls = Math.floor(Math.random() * 6) + 5;
 
-    // Start the rolling animation
-    this.animateRoll(0, lastIndex, 0);
+        // Calculate the index to stop the rolling animation
+        const lastIndex = (randomIndex + totalRolls) % this.videoList.length;
 
-    // Show the thumbnails during rolling
-    this.showThumbnails = true;
+        // Start the rolling animation
+        this.animateRoll(0, lastIndex, 0);
+
+        // Show the thumbnails during rolling
+        this.showThumbnails = true;
+      } else {
+          console.log("Not enough points");
+      }
+    });
   }
 
   animateRoll(currentIndex: number, lastIndex: number, count: number): void {
@@ -216,6 +235,27 @@ export class RewardsComponent implements OnInit {
         // Hide the thumbnails after the rolling stops
         this.showThumbnails = false;
       }, 2000); // Adjust the duration of the stop animation
+    }
+  }
+
+  deductPoints(points: number): Observable<boolean> {
+    if (this.user.points >= points) {
+      this.user.points -= points;
+
+      // Update the user data using the UserService and return an observable
+      return this.userService.updateUser(this.user.id, this.user).pipe(
+        map(() => {
+          console.log('User points updated successfully.');
+          return true; // Points deduction successful
+        }),
+        catchError((error) => {
+          console.error('Failed to update user points:', error);
+          return of(false); // Points deduction failed
+        })
+      );
+    } else {
+      console.log('Insufficient points.');
+      return of(false); // Points deduction failed
     }
   }
 }

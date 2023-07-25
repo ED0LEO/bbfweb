@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { User } from '../models/user.model';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +12,11 @@ export class AuthService {
   username: string = '';
   userId: number | undefined;
 
-  constructor() {
-    this.initializeAuthState();
+  private userSubject = new BehaviorSubject<User | undefined>(undefined);
+  user$ = this.userSubject.asObservable();
+
+  updateUser(user: User | undefined): void {
+      this.userSubject.next(user);
   }
 
   private userIdSubject = new BehaviorSubject<number | undefined>(undefined);
@@ -19,6 +24,10 @@ export class AuthService {
 
   setUserId(userId: number | undefined) {
     this.userIdSubject.next(userId);
+  }
+
+  constructor(private userService: UserService) {
+      this.initializeAuthState();
   }
 
   getUserId(): number | undefined {
@@ -49,12 +58,24 @@ export class AuthService {
 
   autoSetUpFromToken(): void {
     const token = localStorage.getItem(this.storageKey);
-        if (token) {
-          this.isLoggedIn = true;
-          // Set the username based on your implementation
-          this.username = this.getUsernameFromToken(token);
-          this.setUserId(this.getUserIdFromToken(token));
-        }
+    if (token) {
+      this.isLoggedIn = true;
+      this.username = this.getUsernameFromToken(token);
+      this.setUserId(this.getUserIdFromToken(token));
+
+      // Fetch the user data using the UserService
+      const userId = this.getUserId();
+      if (userId !== undefined) {
+        this.userService.getUserById(userId).subscribe(
+          (user) => {
+            this.updateUser(user); // Update the user information in the AuthService
+          },
+          (error) => {
+            console.error('Failed to fetch user data:', error);
+          }
+        );
+      }
+    }
   }
 
   private getUsernameFromToken(token: string): string {

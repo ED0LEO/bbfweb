@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
+import { NotificationService } from '../../services/notification.service';
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -9,8 +11,11 @@ import { User } from '../../models/user.model';
 })
 export class UserListComponent implements OnInit {
   users: User[] | undefined;
-  constructor(private userService: UserService, private router: Router) {
-  }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
   ngOnInit(): void {
     this.getUsers();
   }
@@ -26,6 +31,7 @@ export class UserListComponent implements OnInit {
     this.userService.deleteUser(id).subscribe(data => {
       console.log(data);
       this.getUsers();
+      this.notificationService.showNotification('User deleted successfully!');
     });
   }
 }

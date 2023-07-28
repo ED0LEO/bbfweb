@@ -4,7 +4,7 @@ import { TaskService } from '../../services/task.service';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-task-list',
@@ -21,7 +21,7 @@ export class TaskListComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private taskService: TaskService,
-    private snackBar: MatSnackBar
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +59,7 @@ export class TaskListComponent implements OnInit {
         this.tasks.push(task);
         this.newTask = new Task();
 
-        this.showNotification('Task created successfully!');
+        this.notificationService.showNotification('Task created successfully!');
       });
     }
   }
@@ -68,7 +68,7 @@ export class TaskListComponent implements OnInit {
     this.taskService.deleteTask(task.id).subscribe(() => {
       this.tasks = this.tasks.filter(t => t.id !== task.id);
 
-      this.showNotification('Task deleted successfully!');
+      this.notificationService.showNotification('Task deleted successfully!');
     });
   }
 
@@ -79,12 +79,12 @@ export class TaskListComponent implements OnInit {
     {
       if (task.completion) {
         this.user.points += 20;
-        this.showNotification('+20 pts');
+        this.notificationService.showNotification('+20 pts');
       }
       else
       {
         this.user.points -= 20;
-        this.showNotification('-20 pts');
+        this.notificationService.showNotification('-20 pts');
       }
       // Update the user data using the UserService
       this.userService.updateUser(this.user.id, this.user).subscribe(
@@ -105,13 +105,4 @@ export class TaskListComponent implements OnInit {
       return this.tasks;
     }
   }
-
-  showNotification(message: string, action: string = 'Close') {
-      this.snackBar.open(message, undefined, {
-        duration: 3000, // Duration in milliseconds (3 seconds in this example)
-        verticalPosition: 'top',
-        horizontalPosition: 'right',
-        panelClass: ['custom-snackbar'],
-      });
-    }
 }

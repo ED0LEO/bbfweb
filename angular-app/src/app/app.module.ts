@@ -24,6 +24,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { UserService } from './services/user.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { NotificationService } from './services/notification.service';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatMomentDateModule,
     MatSnackBarModule
   ],
-  providers: [AuthService, UserService],
+  providers: [AuthService, UserService, NotificationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

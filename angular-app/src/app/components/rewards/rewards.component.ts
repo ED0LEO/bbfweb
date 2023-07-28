@@ -9,7 +9,7 @@ import { User } from '../../models/user.model';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from '../../services/notification.service';
 
 interface Video {
   title: string;
@@ -38,7 +38,7 @@ export class RewardsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private authService: AuthService,
     private userService: UserService,
-    private snackBar: MatSnackBar
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -182,10 +182,10 @@ export class RewardsComponent implements OnInit {
             console.error('Failed to fetch videos:', error);
           }
         );
-        this.showNotification("-15");
+        this.notificationService.showNotification("-15");
       } else {
         console.log("Not enough points");
-        this.showNotification("Not enough points");
+        this.notificationService.showNotification("Not enough points");
       }
     });
   }
@@ -215,10 +215,10 @@ export class RewardsComponent implements OnInit {
         // Show the thumbnails during rolling
         this.showThumbnails = true;
 
-        this.showNotification('-1');
+        this.notificationService.showNotification('-1');
       } else {
           console.log("Not enough points");
-          this.showNotification('Not enough points');
+          this.notificationService.showNotification('Not enough points');
       }
     });
   }
@@ -265,14 +265,5 @@ export class RewardsComponent implements OnInit {
       console.log('Insufficient points.');
       return of(false); // Points deduction failed
     }
-  }
-
-  showNotification(message: string, action: string = 'Close') {
-    this.snackBar.open(message, undefined, {
-      duration: 3000, // Duration in milliseconds (3 seconds in this example)
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
-      panelClass: ['custom-snackbar'],
-    });
   }
 }

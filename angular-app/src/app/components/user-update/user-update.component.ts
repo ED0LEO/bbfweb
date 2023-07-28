@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-user-update',
@@ -16,7 +17,8 @@ export class UserUpdateComponent implements OnInit {
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) {}
 
   private getUserById() {
@@ -44,10 +46,12 @@ export class UserUpdateComponent implements OnInit {
     this.userService.updateUser(this.id, this.user).subscribe({
       next: (data) => {
         console.log(data);
+        this.notificationService.showNotification("User update successful");
         this.redirectToUserList();
       },
       error: (e) => {
         console.log(e);
+        this.notificationService.showNotification("User update failed");
       }
     });
   }

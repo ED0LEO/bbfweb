@@ -8,6 +8,7 @@ body {
   padding: 10px;
   border-bottom: none;
   transition: background-color 0.3s ease-in-out;
+  z-index: 1000; /* Set a higher z-index for the navbar */
 }
 
 .navbar-brand {
@@ -19,6 +20,8 @@ body {
 
 .navbar-toggler {
   border-color: #c60000;
+  position: relative; /* Add position relative to the burger menu element */
+  z-index: 1001; /* Set a higher z-index for the burger menu element */
 }
 
 .navbar-toggler-icon {
@@ -49,6 +52,7 @@ body {
   transition: background-color 0.3s ease-in-out;
   position: relative;
   overflow: hidden;
+  z-index: 1; /* Ensure the container is above the navbar and burger menu */
 }
 
 .user-account {

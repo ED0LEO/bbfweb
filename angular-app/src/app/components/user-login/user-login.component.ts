@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-user-login',
@@ -17,7 +17,7 @@ export class UserLoginComponent {
     private http: HttpClient,
     private router: Router,
     private authService: AuthService,
-    private snackBar: MatSnackBar
+    private notificationService: NotificationService
   ) {
     this.username = '';
     this.password = '';
@@ -34,7 +34,7 @@ export class UserLoginComponent {
         // Update the authentication state in the service
         this.authService.autoSetUpFromToken();
 
-        this.showNotification("Login successful!");
+        this.notificationService.showNotification("Login successful!");
 
         // Redirect to the success page
         this.router.navigate(['/users']);
@@ -42,16 +42,7 @@ export class UserLoginComponent {
         // Handle login error here
         console.error('Login failed!', error);
 
-        this.showNotification("Login failed!");
+        this.notificationService.showNotification("Login failed!");
       });
-  }
-
-  showNotification(message: string, action: string = 'Close') {
-    this.snackBar.open(message, undefined, {
-      duration: 3000, // Duration in milliseconds (3 seconds in this example)
-      verticalPosition: 'top',
-      horizontalPosition: 'right',
-      panelClass: ['custom-snackbar'],
-    });
   }
 }

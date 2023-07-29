@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../models/user.model';
 import { UserService } from './user.service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,10 @@ export class AuthService {
   isLoggedIn: boolean = false;
   username: string = '';
   userId: number | undefined;
+
+  constructor(private userService: UserService, private notificationService: NotificationService) {
+      this.initializeAuthState();
+  }
 
   private userSubject = new BehaviorSubject<User | undefined>(undefined);
   user$ = this.userSubject.asObservable();
@@ -24,10 +29,6 @@ export class AuthService {
 
   setUserId(userId: number | undefined) {
     this.userIdSubject.next(userId);
-  }
-
-  constructor(private userService: UserService) {
-      this.initializeAuthState();
   }
 
   getUserId(): number | undefined {
@@ -116,5 +117,6 @@ export class AuthService {
     this.setUsername('');
     this.setUserId(undefined); // Set userId to undefined
     localStorage.removeItem(this.storageKey); // Remove the authentication token
+    this.notificationService.showNotification("Logged out");
   }
 }

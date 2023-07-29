@@ -9,10 +9,6 @@ import { AuthService } from '../../services/auth.service';
 export class AuthComponent {
   constructor(private authService: AuthService) {}
 
-//   get userId(): number | undefined {
-//     return this.authService.userId;
-//   }
-
  get userId$() {
     return this.authService.userId$;
   }

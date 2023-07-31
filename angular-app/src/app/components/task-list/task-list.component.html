@@ -14,6 +14,11 @@
     <button class="btn btn-primary" (click)="addTask()">Create Task</button>
   </div>
 
+  <!-- Point Display -->
+  <div class="points-display">
+    <p>Points: {{ user?.points || 0 }}</p>
+  </div>
+
   <!-- Task List -->
   <div class="task-list">
     <div class="form-check">

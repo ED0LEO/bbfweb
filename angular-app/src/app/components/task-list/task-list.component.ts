@@ -5,6 +5,8 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { NotificationService } from '../../services/notification.service';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
 
 @Component({
   selector: 'app-task-list',
@@ -21,12 +23,24 @@ export class TaskListComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private taskService: TaskService,
-    private notificationService: NotificationService
-  ) {}
+    private notificationService: NotificationService,
+    public dialog: MatDialog
+  ) {
+  }
 
   ngOnInit(): void {
     this.getTasks();
     this.fetchUserData();
+  }
+
+  openTaskDetails(task: Task): void {
+    const dialogRef = this.dialog.open(TaskDetailsComponent, {
+      data: task,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('Dialog was closed:', result);
+    });
   }
 
   fetchUserData(): void {

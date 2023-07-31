@@ -1,1 +1,8 @@
-<p>task-details works!</p>
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<div mat-dialog-content>
+  <p>{{ data.description }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="closeModal()">Close</button>
+  <!-- You can add more buttons or actions here if needed -->
+</div>

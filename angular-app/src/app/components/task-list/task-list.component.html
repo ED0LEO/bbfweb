@@ -21,7 +21,7 @@
       <label class="form-check-label" for="hideCompleted">Hide Completed Tasks</label>
     </div>
     <ul class="list-group">
-      <li class="list-group-item" *ngFor="let task of filteredTasks">
+      <li class="list-group-item" *ngFor="let task of filteredTasks" (click)="openTaskDetails(task)">
         <div class="task-details">
           <h5>{{ task.title }}</h5>
           <div class="form-check">

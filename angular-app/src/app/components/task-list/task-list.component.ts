@@ -34,12 +34,8 @@ export class TaskListComponent implements OnInit {
   }
 
   openTaskDetails(task: Task): void {
-    const dialogRef = this.dialog.open(TaskDetailsComponent, {
-      data: task,
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('Dialog was closed:', result);
+    this.dialog.open(TaskDetailsComponent, {
+      data: task, // Pass the selected task as data to the dialog
     });
   }
 

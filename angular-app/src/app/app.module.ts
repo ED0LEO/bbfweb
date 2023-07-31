@@ -25,6 +25,9 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { UserService } from './services/user.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { NotificationService } from './services/notification.service';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TaskDetailsComponent } from './components/task-details/task-details.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,8 @@ import { NotificationService } from './services/notification.service';
     ErrorComponent,
     RewardsComponent,
     DashboardComponent,
-    CalendarComponent
+    CalendarComponent,
+    TaskDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +56,9 @@ import { NotificationService } from './services/notification.service';
     MatInputModule,
     MatNativeDateModule,
     MatMomentDateModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatButtonModule,
+    MatDialogModule,
   ],
   providers: [AuthService, UserService, NotificationService],
   bootstrap: [AppComponent]

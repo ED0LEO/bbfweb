@@ -36,6 +36,8 @@ public class TaskController {
             existingTask.setCompletion(task.isCompletion());
             if (task.isCompletion()) {
                 existingTask.setCompletionDate(LocalDate.now()); // Set the completion date
+            } else {
+                existingTask.setCompletionDate(null); // Clear the completion date if not completed
             }
             return taskService.updateTask(existingTask);
         } else {

@@ -48,6 +48,13 @@ export class TaskDetailsComponent {
 
   changeCompletionStatus(): void {
     this.task.completion = !this.task.completion;
+    if (this.task.completion) {
+      this.task.completionDate = new Date().toISOString().split('T')[0]; // Set the completion date
+    } else {
+      this.task.completionDate = undefined; // Clear the completion date
+    }
+
+    // Update the task on the server
     this.taskService.updateTask(this.task).subscribe(() => {
       this.notificationService.showNotification(
         `Task marked as ${this.task.completion ? 'completed' : 'incomplete'}`

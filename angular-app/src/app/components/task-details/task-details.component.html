@@ -1,6 +1,7 @@
 <h2 mat-dialog-title>{{ task.title }}</h2>
 <div mat-dialog-content>
   <p>{{ task.description }}</p>
+  <p *ngIf="task.completion">Completed on: {{ task.completionDate | date:'mediumDate' }}</p>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="closeModal()">Close</button>

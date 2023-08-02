@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -33,6 +34,9 @@ public class TaskController {
             existingTask.setTitle(task.getTitle());
             existingTask.setDescription(task.getDescription());
             existingTask.setCompletion(task.isCompletion());
+            if (task.isCompletion()) {
+                existingTask.setCompletionDate(LocalDate.now()); // Set the completion date
+            }
             return taskService.updateTask(existingTask);
         } else {
             throw new TaskNotFoundException("Task not found with ID: " + id);

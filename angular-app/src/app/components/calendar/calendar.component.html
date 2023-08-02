@@ -1,5 +1,17 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
 <div class="app-calendar">
-  <mat-calendar #picker class="app-calendar-datepicker"></mat-calendar>
+  <mat-calendar #picker class="app-calendar-datepicker" (selectedChange)="selectDate($event)">
+    <ng-template mat-calendar-header></ng-template>
+  </mat-calendar>
 </div>
+
+<div *ngIf="selectedDate">
+  <h3>Completed Tasks for {{ selectedDate | date:'mediumDate' }}</h3>
+  <ul>
+    <li *ngFor="let task of completedTasks">
+      {{ task.title }} - {{ task.completionDate | date:'mediumTime' }}
+    </li>
+  </ul>
+</div>
+

@@ -74,14 +74,6 @@ export class TaskListComponent implements OnInit {
     }
   }
 
-  deleteTask(task: Task): void {
-    this.taskService.deleteTask(task.id).subscribe(() => {
-      this.tasks = this.tasks.filter(t => t.id !== task.id);
-
-      this.notificationService.showNotification('Task deleted successfully!');
-    });
-  }
-
   updateTask(task: Task): void {
     this.taskService.updateTask(task).subscribe(() => {
       if (this.user) {

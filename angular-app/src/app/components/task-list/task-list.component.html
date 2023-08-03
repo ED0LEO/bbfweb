@@ -35,7 +35,6 @@
           </div>
         </div>
         <p>{{ task.description }}</p>
-        <button class="btn btn-danger" (click)="deleteTask(task)">Delete</button>
       </li>
       <li class="list-group-item" *ngIf="filteredTasks.length === 0">
         No tasks found.

@@ -69,15 +69,3 @@
 .task-list p {
   color: #ccc;
 }
-
-.task-list .btn-danger {
-  background-color: #ff3300;
-  border-color: #ff3300;
-  color: #fff;
-}
-
-.task-list .btn-danger:hover {
-  background-color: #cc0000;
-  border-color: #cc0000;
-  color: #fff;
-}

@@ -30,7 +30,7 @@
         <div class="task-details">
           <h5>{{ task.title }}</h5>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="completion" [(ngModel)]="task.completion" (change)="updateTask(task)">
+            <input class="form-check-input" type="checkbox" id="completion" [(ngModel)]="task.completion" disabled>
             <label class="form-check-label" for="completion">Completed</label>
           </div>
         </div>

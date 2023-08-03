@@ -74,30 +74,6 @@ export class TaskListComponent implements OnInit {
     }
   }
 
-  updateTask(task: Task): void {
-    this.taskService.updateTask(task).subscribe(() => {
-      if (this.user) {
-        if (task.completion) {
-          this.user.points += 20;
-          this.notificationService.showNotification('+20 pts');
-        } else {
-          this.user.points -= 20;
-          this.notificationService.showNotification('-20 pts');
-        }
-
-        // Update the user data using the UserService
-        this.userService.updateUser(this.user.id, this.user).subscribe(
-          () => {
-            console.log('User points updated successfully.');
-          },
-          (error) => {
-            console.error('Failed to update user points:', error);
-          }
-        );
-      }
-    });
-  }
-
   get filteredTasks(): Task[] {
     if (this.hideCompleted) {
       return this.tasks.filter(task => !task.completion);

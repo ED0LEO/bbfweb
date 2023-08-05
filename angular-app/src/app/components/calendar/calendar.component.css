@@ -1,1 +1,55 @@
-/*@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';*/
+body {
+  background-color: black;
+  color: #fff;
+}
+
+.app-calendar {
+  margin-bottom: 20px;
+}
+
+.completed-tasks-header {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.completed-tasks-list {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.completed-task {
+  background-color: #333;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  width: 300px;
+  display: flex;
+  flex-direction: column; /* Adjusted to column layout */
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.completed-task:hover {
+  background-color: #444;
+}
+
+.task-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 5px; /* Added margin */
+}
+
+.task-completion-date {
+  font-size: 14px;
+}
+
+.no-tasks-message {
+  font-size: 18px;
+  text-align: center;
+}

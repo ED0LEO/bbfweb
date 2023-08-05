@@ -2,16 +2,23 @@
 
 <div class="app-calendar">
   <mat-calendar #picker class="app-calendar-datepicker" (selectedChange)="selectDate($event)">
-<!--    <ng-template mat-calendar-header></ng-template>-->
+    <!--    <ng-template mat-calendar-header></ng-template>-->
   </mat-calendar>
 </div>
 
 <div *ngIf="selectedDate">
-  <h3>Completed Tasks for {{ selectedDate | date:'mediumDate' }}</h3>
-  <ul>
-    <li *ngFor="let task of completedTasks">
-      {{ task.title }} - {{ task.completionDate }}
-    </li>
-  </ul>
+  <div *ngIf="completedTasks.length > 0; else noTasks">
+    <h3 class="completed-tasks-header">Completed Tasks for {{ selectedDate | date:'mediumDate' }}</h3>
+    <ul class="completed-tasks-list">
+      <li *ngFor="let task of completedTasks" class="completed-task">
+        <span class="task-title">{{ task.title }}</span>
+        <span class="task-completion-date">
+          Completed on: {{ task.completionDate | date:'MMM d' }}
+        </span>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noTasks>
+    <p class="no-tasks-message">No tasks were completed on {{ selectedDate | date:'mediumDate' }}</p>
+  </ng-template>
 </div>
-

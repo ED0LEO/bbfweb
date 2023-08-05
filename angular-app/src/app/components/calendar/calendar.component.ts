@@ -14,21 +14,23 @@ export class CalendarComponent {
 
   constructor(private taskService: TaskService) {}
 
-  // Handle date selection
-//   selectDate(event: MatDatepickerInputEvent<Date>): void {
-//     this.selectedDate = event.value;
-//     if (this.selectedDate) {
-//       const completionDate = this.selectedDate.toISOString().split('T')[0];
-//       this.taskService.getCompletedTasksByDate(completionDate).subscribe((tasks) => {
-//         this.completedTasks = tasks;
-//       });
-//     }
-//   }
-
-selectDate(event: MatDatepickerInputEvent<Date>): void {
-  this.selectedDate = event.value;
-  console.log('Selected date:', this.selectedDate);
-  // You can perform additional actions here based on the selected date
-}
-
+  selectDate(event: MatDatepickerInputEvent<Date>): void {
+    if (event) {
+      const stringified = JSON.stringify(event);
+      const dateString = stringified.substring(1, 11);
+      this.selectedDate = new Date(dateString);
+      if (this.selectedDate) {
+        const completionDate = this.selectedDate.toISOString().split('T')[0];
+        this.taskService.getCompletedTasksByDate(completionDate).subscribe((tasks) => {
+          this.completedTasks = tasks;
+        });
+      }
+      else {
+        console.log("date not selected");
+      }
+    }
+    else {
+      console.log("event not found");
+    }
+  }
 }

@@ -20,7 +20,7 @@ export class CalendarComponent {
       const dateString = stringified.substring(1, 11);
       this.selectedDate = new Date(dateString);
       if (this.selectedDate) {
-        const completionDate = this.selectedDate.toISOString().split('T')[0];
+        const completionDate =this.formatDate(this.selectedDate);
         this.taskService.getCompletedTasksByDate(completionDate).subscribe((tasks) => {
           this.completedTasks = tasks;
         });
@@ -33,4 +33,12 @@ export class CalendarComponent {
       console.log("event not found");
     }
   }
+
+  formatDate(date: Date): string {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
 }

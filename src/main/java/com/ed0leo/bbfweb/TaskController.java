@@ -26,6 +26,12 @@ public class TaskController {
         return taskService.addTask(task);
     }
 
+    @GetMapping(params = { "completionDate" })
+    @ResponseStatus(HttpStatus.OK)
+    public List<Task> getCompletedTasksByDate(@RequestParam String completionDate) {
+        return taskService.getCompletedTasksByDate(completionDate);
+    }
+
     @PutMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Task updateTask(@PathVariable int id, @RequestBody Task task) {

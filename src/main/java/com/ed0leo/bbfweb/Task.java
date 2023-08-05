@@ -26,7 +26,7 @@ public class Task {
     @Column
     private boolean completion;
 
-    @Column
+    @Column(name = "completion_date")
     private LocalDate completionDate;
 
     // Getters and setters

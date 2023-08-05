@@ -28,6 +28,9 @@ import { NotificationService } from './services/notification.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
+
 
 @NgModule({
   declarations: [
@@ -60,7 +63,18 @@ import { TaskDetailsComponent } from './components/task-details/task-details.com
     MatButtonModule,
     MatDialogModule,
   ],
-  providers: [AuthService, UserService, NotificationService],
+  providers: [
+    AuthService,
+    UserService,
+    NotificationService,
+    {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    {provide: MAT_DATE_LOCALE, useValue: 'gb-EN'},
+    {
+       provide: DateAdapter,
+       useClass: MomentDateAdapter,
+       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

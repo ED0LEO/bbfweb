@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/Task';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
 
 @Component({
   selector: 'app-calendar',
@@ -12,7 +14,10 @@ export class CalendarComponent {
   selectedDate: Date | null = null;
   completedTasks: Task[] = [];
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    public dialog: MatDialog
+  ) {}
 
   selectDate(event: MatDatepickerInputEvent<Date>): void {
     if (event) {
@@ -41,4 +46,9 @@ export class CalendarComponent {
     return `${year}-${month}-${day}`;
   }
 
+  openTaskDetails(task: Task): void {
+    this.dialog.open(TaskDetailsComponent, {
+      data: task, // Pass the selected task as data to the dialog
+    });
+  }
 }

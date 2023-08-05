@@ -5,12 +5,11 @@
     <!--    <ng-template mat-calendar-header></ng-template>-->
   </mat-calendar>
 </div>
-
 <div *ngIf="selectedDate">
   <div *ngIf="completedTasks.length > 0; else noTasks">
     <h3 class="completed-tasks-header">Completed Tasks for {{ selectedDate | date:'mediumDate' }}</h3>
     <ul class="completed-tasks-list">
-      <li *ngFor="let task of completedTasks" class="completed-task">
+      <li *ngFor="let task of completedTasks" class="completed-task" (click)="openTaskDetails(task)">
         <span class="task-title">{{ task.title }}</span>
         <span class="task-completion-date">
           Completed on: {{ task.completionDate | date:'MMM d' }}

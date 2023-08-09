@@ -2,7 +2,7 @@
   <h2 class="text-center">Dashboard</h2>
 
   <ng-container *ngIf="user">
-    <h3 class="text-center">Welcome, {{ user.username }}!</h3>
+    <h3 class="text-center">Welcome, <span class="username">{{ user.username }}</span>!</h3>
     <p class="text-center">Points: {{ user.points }}</p>
 
     <app-calendar></app-calendar>

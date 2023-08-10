@@ -14,6 +14,7 @@ export class CalendarComponent implements OnInit {
   selectedDate: Date | null = null;
   completedTasks: Task[] = [];
   completedTasksMap: Map<string, Task[]> = new Map();
+  isDataFetched = false;
 
   constructor(
     private taskService: TaskService,
@@ -21,7 +22,9 @@ export class CalendarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchCompletedTasks();
+    this.fetchCompletedTasks().then(() => {
+      this.isDataFetched = true; // Set the flag to true when data is fetched
+    });
   }
 
   async fetchCompletedTasks(): Promise<void> {

@@ -55,6 +55,6 @@ body {
 }
 
 ::ng-deep .mat-calendar .mat-calendar-body-cell.special-days {
-  background-color: orange;
+  background-color: #b36200;
   border-radius: 50%;
 }

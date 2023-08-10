@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { MatDatepickerInputEvent, MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/Task';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,23 +19,26 @@ export class CalendarComponent {
     public dialog: MatDialog
   ) {}
 
-  selectDate(event: MatDatepickerInputEvent<Date>): void {
-    if (event) {
-      const stringified = JSON.stringify(event);
-      const dateString = stringified.substring(1, 11);
-      this.selectedDate = new Date(dateString);
-      if (this.selectedDate) {
-        const completionDate =this.formatDate(this.selectedDate);
-        this.taskService.getCompletedTasksByDate(completionDate).subscribe((tasks) => {
-          this.completedTasks = tasks;
-        });
-      }
-      else {
-        console.log("date not selected");
-      }
+  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+  //Highligh 1st and 20th day
+    if (view === 'month') {
+      cellDate = new Date(cellDate);
+      const date = cellDate.getDate();
+      return (date === 1 || date === 20) ? 'special-days' : '';
+    }
+    return '';
+  }
+
+  selectDate(): void {
+    if (this.selectedDate) {
+      this.selectedDate = new Date(this.selectedDate);
+      const completionDate =this.formatDate(this.selectedDate);
+      this.taskService.getCompletedTasksByDate(completionDate).subscribe((tasks) => {
+        this.completedTasks = tasks;
+      });
     }
     else {
-      console.log("event not found");
+      console.log("date not selected");
     }
   }
 

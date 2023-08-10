@@ -1,7 +1,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
 <div class="app-calendar">
-  <mat-calendar [(selected)]="selectedDate" #picker class="app-calendar-datepicker" (selectedChange)="selectDate($event)">
+  <mat-calendar
+    [(selected)]="selectedDate"
+    [dateClass]="dateClass"
+    #picker
+    class="app-calendar-datepicker"
+    (selectedChange)="selectDate()">
   </mat-calendar>
 </div>
 <div *ngIf="selectedDate">

@@ -53,3 +53,8 @@ body {
   font-size: 18px;
   text-align: center;
 }
+
+::ng-deep .mat-calendar .mat-calendar-body-cell.special-days {
+  background-color: orange;
+  border-radius: 50%;
+}

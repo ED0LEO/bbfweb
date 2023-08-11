@@ -30,7 +30,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
-
+import { StyleService } from './services/style.service';
 
 @NgModule({
   declarations: [
@@ -67,6 +67,7 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/mat
     AuthService,
     UserService,
     NotificationService,
+    StyleService,
     {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     {provide: MAT_DATE_LOCALE, useValue: 'gb-EN'},
     {

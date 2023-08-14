@@ -1,0 +1,9 @@
+<div>
+  <h2>Select a Time Slot</h2>
+  <ul>
+    <li *ngFor="let timeSlot of timeSlots" (click)="selectTime(timeSlot)" [class.selected]="selectedTime === timeSlot">
+      {{ timeSlot }}
+    </li>
+  </ul>
+  <button [disabled]="!selectedTime" (click)="saveTimeSlot()">Save</button>
+</div>

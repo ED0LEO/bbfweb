@@ -31,6 +31,8 @@ import { TaskDetailsComponent } from './components/task-details/task-details.com
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { StyleService } from './services/style.service';
+import { TimeScheduleComponent } from './components/time-schedule/time-schedule.component';
+import { HabitTrackerComponent } from './components/habit-tracker/habit-tracker.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import { StyleService } from './services/style.service';
     RewardsComponent,
     DashboardComponent,
     CalendarComponent,
-    TaskDetailsComponent
+    TaskDetailsComponent,
+    TimeScheduleComponent,
+    HabitTrackerComponent
   ],
   imports: [
     BrowserModule,

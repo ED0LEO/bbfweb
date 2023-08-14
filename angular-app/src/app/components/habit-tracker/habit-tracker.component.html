@@ -1,0 +1,9 @@
+<div>
+  <h2>Habit Tracker</h2>
+  <ul>
+    <li *ngFor="let habit of habits">
+      {{ habit.name }} - {{ habit.days }} days
+      <button (click)="incrementDays(habit)">Increment</button>
+    </li>
+  </ul>
+</div>

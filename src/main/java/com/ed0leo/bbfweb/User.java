@@ -1,11 +1,6 @@
 package com.ed0leo.bbfweb;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -35,6 +30,15 @@ public class User {
 
     @Column
     private int points;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
+
+    @OneToMany(mappedBy = "user")
+    private List<Habit> habits;
+
+    @OneToMany(mappedBy = "user")
+    private List<Activity> dayPlanner;
 
     public int getPoints() {
         return points;

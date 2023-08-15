@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDatepickerInputEvent, MatCalendarCellClassFunction } from '@angular/material/datepicker';
 import { TaskService } from '../../services/task.service';
-import { Task } from '../../models/Task';
+import { Task } from '../../models/task';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 

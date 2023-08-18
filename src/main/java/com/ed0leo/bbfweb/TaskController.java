@@ -32,6 +32,12 @@ public class TaskController {
         return taskService.getCompletedTasksByDate(completionDate);
     }
 
+    @GetMapping(params = { "userId" })
+    @ResponseStatus(value = HttpStatus.OK)
+    public List<Task> getTasksByUser(@RequestParam int userId) {
+        return taskService.getTasksByUser(userId);
+    }
+
     @PutMapping(value = "/{id}")
     @ResponseStatus(value = HttpStatus.OK)
     public Task updateTask(@PathVariable int id, @RequestBody Task task) {

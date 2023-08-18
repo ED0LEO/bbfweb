@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Integer> {
     List<Task> findByCompletionAndCompletionDate(boolean completion, LocalDate completionDate);
+    List<Task> findByUser_Id(int userId);
 }

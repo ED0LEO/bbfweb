@@ -26,6 +26,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> getTasksByUser(int userId) {
+        return taskRepository.findByUser_Id(userId);
+    }
+
+    @Override
     public void deleteTask(int id) {
         taskRepository.deleteById(id);
     }

@@ -1,11 +1,6 @@
 package com.ed0leo.bbfweb;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -16,6 +11,10 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private int id; // Primary Key
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column
     private String title;
@@ -69,5 +68,10 @@ public class Task {
 
     public void setCompletion(boolean completion) {
         this.completion = completion;
+    }
+
+    @Override
+    public String toString() {
+        return "Task [id=" + id + ", title=" + title + ", completionDate=" + completionDate + "]";
     }
 }

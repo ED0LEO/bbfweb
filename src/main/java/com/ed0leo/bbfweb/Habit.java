@@ -12,6 +12,10 @@ public class Habit {
     @Column
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column
     private String name;
 
@@ -20,10 +24,6 @@ public class Habit {
 
     @Column
     private boolean isBadHabit;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     // ... Getters and setters
 

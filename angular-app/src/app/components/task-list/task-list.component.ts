@@ -29,8 +29,8 @@ export class TaskListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getTasks();
     this.fetchUserData();
+//     this.getTasks();
   }
 
   openTaskDetails(task: Task): void {
@@ -48,6 +48,7 @@ export class TaskListComponent implements OnInit {
         this.userService.getUserById(userId).subscribe(
           (user) => {
             this.user = user;
+            this.getTasks();
           },
           (error) => {
             console.error('Failed to fetch user data:', error);
@@ -58,13 +59,19 @@ export class TaskListComponent implements OnInit {
   }
 
   getTasks(): void {
-    this.taskService.getAllTasks().subscribe(tasks => {
-      this.tasks = tasks;
-    });
+    if (this.user) {
+      console.log("user id is " + this.user.id);
+      this.taskService.getTasksByUser(this.user.id).subscribe(tasks => {
+        this.tasks = tasks;
+      });
+    }
+    else
+      console.log("user is not available");
   }
 
   addTask(): void {
     if (this.newTask.title.trim() && this.newTask.description.trim()) {
+      this.newTask.user = this.user; // Associate the task with the current user
       this.taskService.createTask(this.newTask).subscribe(task => {
         this.tasks.push(task);
         this.newTask = new Task();

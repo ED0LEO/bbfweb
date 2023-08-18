@@ -40,6 +40,7 @@ public class TaskController {
             existingTask.setTitle(task.getTitle());
             existingTask.setDescription(task.getDescription());
             existingTask.setCompletion(task.isCompletion());
+            existingTask.setUser(task.getUser());
             if (task.isCompletion()) {
                 existingTask.setCompletionDate(LocalDate.now()); // Set the completion date
             } else {

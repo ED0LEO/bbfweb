@@ -4,6 +4,11 @@ import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
+import { AuthService } from '../../services/auth.service';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.model';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-calendar',
@@ -15,16 +20,43 @@ export class CalendarComponent implements OnInit {
   completedTasks: Task[] = [];
   completedTasksMap: Map<string, Task[]> = new Map();
   isDataFetched = false;
+  user: User | undefined;
 
   constructor(
+    private authService: AuthService,
+    private userService: UserService,
     private taskService: TaskService,
     public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.fetchCompletedTasks().then(() => {
-      this.isDataFetched = true; // Set the flag to true when data is fetched
+    // Fetch user data first
+    this.fetchUserData().subscribe((user: User | undefined) => {
+      // User data fetched, now fetch completed tasks
+      if (user) {
+        this.user = user;
+        this.fetchCompletedTasks().then(() => {
+          this.isDataFetched = true; // Set the flag to true when data is fetched
+        });
+      }
     });
+  }
+
+  fetchUserData(): Observable<User | undefined> {
+    if (this.authService.isLoggedIn) {
+      const userId = this.authService.getUserId();
+
+      if (userId !== undefined) {
+        // Fetch the user data using the UserService
+        return this.userService.getUserById(userId).pipe(
+          catchError((error) => {
+            console.error('Failed to fetch user data:', error);
+            return of(undefined); // Return undefined in case of error
+          })
+        );
+      }
+    }
+    return of(undefined); // Return undefined if not logged in
   }
 
   async fetchCompletedTasks(): Promise<void> {

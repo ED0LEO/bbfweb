@@ -50,4 +50,11 @@ public class TaskServiceImpl implements TaskService {
         LocalDate parsedCompletionDate = LocalDate.parse(completionDate); // Parse the input string to LocalDate
         return taskRepository.findByCompletionAndCompletionDate(true, parsedCompletionDate);
     }
+
+    @Override
+    public List<Task> getCompletedTasksByDateAndUser(String completionDate, int userId) {
+        LocalDate parsedCompletionDate = LocalDate.parse(completionDate);
+        return taskRepository.findByCompletionAndCompletionDateAndUser_Id(true, parsedCompletionDate, userId);
+    }
+
 }

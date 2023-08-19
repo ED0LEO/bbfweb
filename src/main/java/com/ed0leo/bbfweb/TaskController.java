@@ -32,6 +32,12 @@ public class TaskController {
         return taskService.getCompletedTasksByDate(completionDate);
     }
 
+    @GetMapping(params = { "completionDate", "userId" })
+    @ResponseStatus(HttpStatus.OK)
+    public List<Task> getCompletedTasksByDateAndUser(@RequestParam String completionDate, @RequestParam int userId) {
+        return taskService.getCompletedTasksByDateAndUser(completionDate, userId);
+    }
+
     @GetMapping(params = { "userId" })
     @ResponseStatus(value = HttpStatus.OK)
     public List<Task> getTasksByUser(@RequestParam int userId) {

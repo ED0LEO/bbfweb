@@ -25,6 +25,10 @@ export class TaskService {
     return this.http.get<Task[]>(`${this.baseUrl}?completion=true&completionDate=${completionDate}`);
   }
 
+  getCompletedTasksByDateAndUser(completionDate: string, userId: number): Observable<Task[]> {
+    return this.http.get<Task[]>(`${this.baseUrl}?completion=true&completionDate=${completionDate}&userId=${userId}`);
+  }
+
   createTask(task: Task): Observable<Task> {
     return this.http.post<Task>(this.baseUrl, task);
   }

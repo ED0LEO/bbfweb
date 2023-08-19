@@ -60,13 +60,12 @@ export class TaskListComponent implements OnInit {
 
   getTasks(): void {
     if (this.user) {
-      console.log("user id is " + this.user.id);
       this.taskService.getTasksByUser(this.user.id).subscribe(tasks => {
         this.tasks = tasks;
       });
     }
     else
-      console.log("user is not available");
+      console.log("User is not available");
   }
 
   addTask(): void {

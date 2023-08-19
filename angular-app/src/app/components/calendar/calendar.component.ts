@@ -73,12 +73,14 @@ export class CalendarComponent implements OnInit {
       // Construct the formatted date for the current day
       const formattedDate = `${currentYear}-${(currentMonth + 1).toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
 
-      // Fetch completed tasks for the current day
-      const tasks = await this.taskService.getCompletedTasksByDate(formattedDate).toPromise();
+      // Fetch completed tasks for the current day and user
+      if (this.user) {
+        const tasks = await this.taskService.getCompletedTasksByDateAndUser(formattedDate, this.user.id).toPromise();
 
-      // Add tasks to the map only if the tasks array is defined
-      if (tasks !== undefined) {
-        this.completedTasksMap.set(formattedDate, tasks);
+        // Add tasks to the map only if the tasks array is defined
+        if (tasks !== undefined) {
+          this.completedTasksMap.set(formattedDate, tasks);
+        }
       }
     }
   }
@@ -97,15 +99,15 @@ export class CalendarComponent implements OnInit {
   }
 
   selectDate(): void {
-    if (this.selectedDate) {
+    if (this.selectedDate && this.user) {
       this.selectedDate = new Date(this.selectedDate);
       const completionDate = this.formatDate(this.selectedDate);
-      this.taskService.getCompletedTasksByDate(completionDate).subscribe((tasks) => {
+      this.taskService.getCompletedTasksByDateAndUser(completionDate, this.user.id).subscribe((tasks) => {
         this.completedTasks = tasks;
       });
     }
     else {
-      console.log("date not selected");
+      console.log("Date not selected or user is not available");
     }
   }
 

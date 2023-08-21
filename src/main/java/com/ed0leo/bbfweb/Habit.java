@@ -25,7 +25,45 @@ public class Habit {
     @Column
     private boolean isBadHabit;
 
-    // ... Getters and setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDateTime getLastUsedTime() {
+        return lastUsedTime;
+    }
+
+    public void setLastUsedTime(LocalDateTime lastUsedTime) {
+        this.lastUsedTime = lastUsedTime;
+    }
+
+    public boolean isBadHabit() {
+        return isBadHabit;
+    }
+
+    public void setBadHabit(boolean badHabit) {
+        isBadHabit = badHabit;
+    }
 
     @Override
     public String toString() {

@@ -1,9 +1,17 @@
 <div>
   <h2>Habit Tracker</h2>
+  <form>
+    <label for="habitName">Habit Name:</label>
+    <input type="text" id="habitName" [(ngModel)]="newHabit.name" name="habitName">
+    <label for="isGoodHabit">Is Good Habit:</label>
+    <input type="checkbox" id="isGoodHabit" [(ngModel)]="newHabit.isGoodHabit" name="isGoodHabit">
+    <button mat-raised-button color="primary" (click)="addHabit()">Add Habit</button>
+  </form>
   <ul>
     <li *ngFor="let habit of habits">
-      {{ habit.name }} - {{ habit.days }} days
-      <button (click)="incrementDays(habit)">Increment</button>
+      {{ habit.name }} - {{ habit.isGoodHabit ? 'Good Habit' : 'Bad Habit' }}
+      <button mat-button color="primary" (click)="openHabitDetails(habit)">Edit</button>
+      <button mat-button color="warn" (click)="deleteHabit(habit)">Delete</button>
     </li>
   </ul>
 </div>

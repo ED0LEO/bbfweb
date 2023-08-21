@@ -33,6 +33,8 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter } from '@angular/mat
 import { StyleService } from './services/style.service';
 import { TimeScheduleComponent } from './components/time-schedule/time-schedule.component';
 import { HabitTrackerComponent } from './components/habit-tracker/habit-tracker.component';
+import { HabitService } from './services/habit.service';
+
 
 @NgModule({
   declarations: [
@@ -72,6 +74,7 @@ import { HabitTrackerComponent } from './components/habit-tracker/habit-tracker.
     UserService,
     NotificationService,
     StyleService,
+    HabitService,
     {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     {provide: MAT_DATE_LOCALE, useValue: 'gb-EN'},
     {

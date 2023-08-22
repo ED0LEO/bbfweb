@@ -26,10 +26,6 @@ export class HabitTrackerComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchUserData();
-
-    if (this.user) {
-      this.fetchUserHabits();
-    }
   }
 
   fetchUserData(): void {
@@ -40,6 +36,7 @@ export class HabitTrackerComponent implements OnInit {
         this.userService.getUserById(userId).subscribe(
           (user) => {
             this.user = user;
+            this.fetchUserHabits();
           },
           (error) => {
             console.error('Failed to fetch user data:', error);

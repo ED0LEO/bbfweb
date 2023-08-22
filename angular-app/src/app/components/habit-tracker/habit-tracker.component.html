@@ -3,13 +3,13 @@
   <form>
     <label for="habitName">Habit Name:</label>
     <input type="text" id="habitName" [(ngModel)]="newHabit.name" name="habitName">
-    <label for="isGoodHabit">Is Good Habit:</label>
-    <input type="checkbox" id="isGoodHabit" [(ngModel)]="newHabit.isGoodHabit" name="isGoodHabit">
+    <label for="isBadHabit">Is Bad Habit:</label>
+    <input type="checkbox" id="isBadHabit" [(ngModel)]="newHabit.isBadHabit" name="isBadHabit">
     <button mat-raised-button color="primary" (click)="addHabit()">Add Habit</button>
   </form>
   <ul>
     <li *ngFor="let habit of habits">
-      {{ habit.name }} - {{ habit.isGoodHabit ? 'Good Habit' : 'Bad Habit' }}
+      {{ habit.name }} - {{ habit.isBadHabit ? 'Bad Habit' : 'Good Habit' }}
       <button mat-button color="primary" (click)="openHabitDetails(habit)">Edit</button>
       <button mat-button color="warn" (click)="deleteHabit(habit)">Delete</button>
     </li>

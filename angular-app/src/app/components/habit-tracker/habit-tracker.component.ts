@@ -5,7 +5,8 @@ import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
 import { MatDialog } from '@angular/material/dialog';
-// import { HabitDetailsComponent } from '../habit-details/habit-details.component';
+import { HabitDetailsComponent } from '../habit-details/habit-details.component';
+import { NotificationService } from '../../services/notification.service';
 
 @Component({
   selector: 'app-habit-tracker',
@@ -21,6 +22,7 @@ export class HabitTrackerComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private habitService: HabitService,
+    private notificationService: NotificationService,
     public dialog: MatDialog
   ) {}
 
@@ -55,16 +57,16 @@ export class HabitTrackerComponent implements OnInit {
   }
 
   openHabitDetails(habit: Habit): void {
-//     const dialogRef = this.dialog.open(HabitDetailsComponent, {
-//       data: habit
-//     });
-//
-//     dialogRef.afterClosed().subscribe(result => {
-//       if (result === 'updated') {
-//         // Habit was updated, fetch user habits again
-//         this.fetchUserHabits();
-//       }
-//     });
+    const dialogRef = this.dialog.open(HabitDetailsComponent, {
+      data: habit
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'updated') {
+        // Habit was updated, fetch user habits again
+        this.fetchUserHabits();
+      }
+    });
   }
 
   addHabit(): void {
@@ -72,13 +74,14 @@ export class HabitTrackerComponent implements OnInit {
     console.log("this habit is: " + this.newHabit.name + ", " + this.newHabit.isBadHabit);
     if (this.user) {
       this.newHabit.user = this.user;
+      console.log("Sending habit to backend:", this.newHabit);
       this.habitService.createHabit(this.newHabit).subscribe(habit => {
         habit.isBadHabit = this.newHabit.isBadHabit ? true : false;
         console.log("this habit_c is: " + habit.name + ", " + habit.isBadHabit);
         this.habits.push(habit);
         this.newHabit = new Habit();
 
-//         this.notificationService.showNotification('Habit created successfully!');
+        this.notificationService.showNotification('Habit created successfully!');
       });
     }
   }
@@ -86,6 +89,8 @@ export class HabitTrackerComponent implements OnInit {
   deleteHabit(habit: Habit): void {
     if (habit.id && this.user) {
       this.habitService.deleteHabit(habit.id).subscribe(() => {
+        this.notificationService.showNotification('Habit deleted!');
+
         // Habit was deleted, fetch user habits again
         this.fetchUserHabits();
       });

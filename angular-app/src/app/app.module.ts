@@ -34,6 +34,7 @@ import { StyleService } from './services/style.service';
 import { TimeScheduleComponent } from './components/time-schedule/time-schedule.component';
 import { HabitTrackerComponent } from './components/habit-tracker/habit-tracker.component';
 import { HabitService } from './services/habit.service';
+import { HabitDetailsComponent } from './components/habit-details/habit-details.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { HabitService } from './services/habit.service';
     CalendarComponent,
     TaskDetailsComponent,
     TimeScheduleComponent,
-    HabitTrackerComponent
+    HabitTrackerComponent,
+    HabitDetailsComponent
   ],
   imports: [
     BrowserModule,

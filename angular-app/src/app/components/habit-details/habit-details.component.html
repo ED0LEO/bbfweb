@@ -1,1 +1,11 @@
-<p>habit-details works!</p>
+<h2 mat-dialog-title>{{ editedHabit.name }}</h2>
+<div mat-dialog-content>
+  <label for="editedHabitName">Habit Name:</label>
+  <input type="text" id="editedHabitName" [(ngModel)]="editedHabit.name" name="editedHabitName">
+  <label for="editedHabitIsBad">Is Bad Habit:</label>
+  <input type="checkbox" id="editedHabitIsBad" [(ngModel)]="editedHabit.isBadHabit" name="editedHabitIsBad">
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cancel()">Cancel</button>
+  <button mat-button color="primary" (click)="updateHabit()">Update Habit</button>
+</div>

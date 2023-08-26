@@ -1,0 +1,50 @@
+/* time-schedule.component.css */
+.time-schedule-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  margin: 2px;
+  width: 50px;
+  text-align: center;
+}
+
+li.selected {
+  background-color: #3498db;
+  color: white;
+}
+
+.activity-form {
+  margin-left: 20px;
+}
+
+.activity-form label, .activity-form input, .activity-form select {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.activity-table {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.activity-table th, .activity-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.activity-table th {
+  background-color: #f2f2f2;
+}

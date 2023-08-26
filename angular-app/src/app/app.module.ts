@@ -35,6 +35,7 @@ import { TimeScheduleComponent } from './components/time-schedule/time-schedule.
 import { HabitTrackerComponent } from './components/habit-tracker/habit-tracker.component';
 import { HabitService } from './services/habit.service';
 import { HabitDetailsComponent } from './components/habit-details/habit-details.component';
+import { ActivityService } from './services/activity.service';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { HabitDetailsComponent } from './components/habit-details/habit-details.
     NotificationService,
     StyleService,
     HabitService,
+    ActivityService,
     {provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     {provide: MAT_DATE_LOCALE, useValue: 'gb-EN'},
     {

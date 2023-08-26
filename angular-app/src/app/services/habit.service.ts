@@ -8,7 +8,7 @@ import { Habit } from '../models/habit.model';
   providedIn: 'root'
 })
 export class HabitService {
-  private baseUrl = 'http://localhost:8080/habit'; // Adjust the URL according to your backend API
+  private baseUrl = 'http://localhost:8080/habit';
 
   constructor(private http: HttpClient) { }
 

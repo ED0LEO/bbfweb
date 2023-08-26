@@ -5,5 +5,17 @@
       {{ timeSlot }}
     </li>
   </ul>
-  <button [disabled]="!selectedTime" (click)="saveTimeSlot()">Save</button>
+  <button [disabled]="!selectedTime" (click)="saveTimeSlot()">Create Activity</button>
 </div>
+
+<!-- Display activities in a table -->
+<table>
+  <tr>
+    <th>Time Slot</th>
+    <th>Activity Name</th>
+  </tr>
+  <tr *ngFor="let activity of activities">
+    <td>{{ activity.startTime }}</td>
+    <td>{{ activity.name }}</td>
+  </tr>
+</table>

@@ -12,7 +12,6 @@ import { User } from '../../models/user.model';
 })
 export class TimeScheduleComponent implements OnInit {
   timeSlots: string[] = [];
-  selectedTime: string = '';
   newActivity: Activity = new Activity();
   activities: Activity[] = []; // Array to store activities
   user: User | undefined;
@@ -48,18 +47,14 @@ export class TimeScheduleComponent implements OnInit {
     }
   }
 
-  selectTime(time: string): void {
-    this.selectedTime = time;
-  }
-
   saveTimeSlot(): void {
-    if (this.selectedTime && this.user) {
+    console.log("this start: " + this.newActivity.startTime + "; this end: " + this.newActivity.endTime);
+    if (this.user) {
       this.newActivity.user = this.user;
-      this.newActivity.startTime = this.selectedTime;
       // Call the activity service to create the new activity
       this.activityService.createActivity(this.newActivity).subscribe(activity => {
         this.activities.push(activity); // Add the created activity to the array
-        this.selectedTime = ''; // Clear the selected time
+        this.newActivity = new Activity();
       });
     }
   }

@@ -1,30 +1,36 @@
-<!-- time-schedule.component.html -->
 <div class="time-schedule-container">
-  <h2>Select a Time Slot</h2>
-  <ul>
-    <li *ngFor="let timeSlot of timeSlots" (click)="selectTime(timeSlot)" [class.selected]="selectedTime === timeSlot">
-      {{ timeSlot }}
-    </li>
-  </ul>
+  <div class="time-slots">
+    <h2>Select a Start Time</h2>
+    <ul class="time-slot-list">
+      <li *ngFor="let timeSlot of timeSlots"
+          [class.selected-time-slot]="newActivity.startTime === timeSlot"
+          (click)="newActivity.startTime = timeSlot">
+        {{ timeSlot }}
+      </li>
+    </ul>
+  </div>
   <div class="activity-form">
+    <h2>Create Activity</h2>
     <label for="activityName">Activity Name:</label>
     <input type="text" id="activityName" [(ngModel)]="newActivity.name" name="activityName">
-    <label for="startTime">Start Time:</label>
-    <select id="startTime" [(ngModel)]="newActivity.startTime" name="startTime">
+    <label for="endTime">End Time:</label>
+    <select id="endTime" [(ngModel)]="newActivity.endTime" name="endTime">
       <option *ngFor="let timeSlot of timeSlots" [value]="timeSlot">{{ timeSlot }}</option>
     </select>
-    <button [disabled]="!selectedTime || !newActivity.name" (click)="saveTimeSlot()">Create Activity</button>
+    <button [disabled]="!newActivity.startTime || !newActivity.endTime || !newActivity.name" (click)="saveTimeSlot()">Create Activity</button>
   </div>
 </div>
 
 <!-- Display activities in a table -->
 <table class="activity-table">
   <tr>
-    <th>Time Slot</th>
+    <th>Start Time</th>
+    <th>End Time</th>
     <th>Activity Name</th>
   </tr>
   <tr *ngFor="let activity of activities">
     <td>{{ activity.startTime }}</td>
+    <td>{{ activity.endTime }}</td>
     <td>{{ activity.name }}</td>
   </tr>
 </table>

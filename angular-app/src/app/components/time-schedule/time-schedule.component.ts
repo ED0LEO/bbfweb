@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivityService } from '../../services/activity.service'; // Import the activity service
-import { Activity } from '../../models/activity.model'; // Import the activity model
+import { ActivityService } from '../../services/activity.service';
+import { Activity } from '../../models/activity.model';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
@@ -13,7 +13,7 @@ import { User } from '../../models/user.model';
 export class TimeScheduleComponent implements OnInit {
   timeSlots: string[] = [];
   newActivity: Activity = new Activity();
-  activities: Activity[] = []; // Array to store activities
+  activities: Activity[] = [];
   user: User | undefined;
 
   constructor(
@@ -35,7 +35,7 @@ export class TimeScheduleComponent implements OnInit {
           (user) => {
             this.user = user;
             for (let hour = 9; hour <= 17; hour++) {
-                  this.timeSlots.push(`${hour}:00`);
+              this.timeSlots.push(`${hour}:00`);
             }
             this.fetchActivities();
           },
@@ -51,20 +51,26 @@ export class TimeScheduleComponent implements OnInit {
     console.log("this start: " + this.newActivity.startTime + "; this end: " + this.newActivity.endTime);
     if (this.user) {
       this.newActivity.user = this.user;
-      // Call the activity service to create the new activity
       this.activityService.createActivity(this.newActivity).subscribe(activity => {
-        this.activities.push(activity); // Add the created activity to the array
+        this.activities.push(activity);
         this.newActivity = new Activity();
+        this.activities.sort((a, b) => {
+          // Compare activities based on their start times for sorting
+          return (a.startTime || '').localeCompare(b.startTime || ''); // Use an empty string as a fallback value
+        });
       });
     }
   }
 
   fetchActivities(): void {
-    // Fetch activities here and populate the `activities` array
-    if  (this.user){
+    if (this.user) {
       this.activityService.getActivitiesByUser(this.user.id).subscribe(activities => {
         this.activities = activities;
-      });
+        // Sort activities by start time when fetched
+        this.activities.sort((a, b) => {
+          return (a.startTime || '').localeCompare(b.startTime || ''); // Use empty strings as fallback values
+        });
+     });
     }
   }
 }

@@ -15,7 +15,9 @@
     <input type="text" id="activityName" [(ngModel)]="newActivity.name" name="activityName">
     <label for="endTime">End Time:</label>
     <select id="endTime" [(ngModel)]="newActivity.endTime" name="endTime">
-      <option *ngFor="let timeSlot of timeSlots" [value]="timeSlot">{{ timeSlot }}</option>
+      <option *ngFor="let timeSlot of timeSlots" [value]="timeSlot" [disabled]="newActivity.startTime && timeSlot <= newActivity.startTime">
+        {{ timeSlot }}
+      </option>
     </select>
     <button [disabled]="!newActivity.startTime || !newActivity.endTime || !newActivity.name" (click)="saveTimeSlot()">Create Activity</button>
   </div>

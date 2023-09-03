@@ -48,17 +48,25 @@ export class TimeScheduleComponent implements OnInit {
   }
 
   saveTimeSlot(): void {
-    console.log("this start: " + this.newActivity.startTime + "; this end: " + this.newActivity.endTime);
     if (this.user) {
-      this.newActivity.user = this.user;
-      this.activityService.createActivity(this.newActivity).subscribe(activity => {
-        this.activities.push(activity);
-        this.newActivity = new Activity();
-        this.activities.sort((a, b) => {
-          // Compare activities based on their start times for sorting
-          return (a.startTime || '').localeCompare(b.startTime || ''); // Use an empty string as a fallback value
+      // Check if the end time is greater than the start time
+      if (
+        this.newActivity.startTime &&
+        this.newActivity.endTime &&
+        this.newActivity.endTime > this.newActivity.startTime
+      ) {
+        this.newActivity.user = this.user;
+        this.activityService.createActivity(this.newActivity).subscribe(activity => {
+          this.activities.push(activity);
+          this.newActivity = new Activity();
+          this.activities.sort((a, b) => {
+            return (a.startTime || '').localeCompare(b.startTime || ''); // Use an empty string as a fallback value
+          });
         });
-      });
+      } else {
+        // Display an error message or handle the validation appropriately
+        console.error('End time must be greater than start time.');
+      }
     }
   }
 
